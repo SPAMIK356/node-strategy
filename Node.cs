@@ -1,13 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NodeStrategy
+﻿namespace NodeStrategy
 {
-    class Node
+    class Node : MapElement
     {
 
-        int id;
+        public string name;
+        public int controledBy;
 
+        public override bool AcceptArmy(Army army)
+        {
+            throw new NotImplementedException();
+        }
+        public override bool CanAcceptArmy()
+        {
+            if(components.Contains(x => { return x is MilitaryComponent;  }))
+            {
+
+            }
+        }
     }
 }
