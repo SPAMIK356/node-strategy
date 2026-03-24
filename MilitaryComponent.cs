@@ -4,11 +4,11 @@ using System.Text;
 
 namespace NodeStrategy
 {
-    class MilitaryComponent
+    class MilitaryComponent : Component
     {
         List<Army> defenders;
         List<Army> attackers;
-        int 
+        int armyCap;
         public void ResolveCombat()
         {
             if(defenders.Count == 0 || attackers.Count == 0)
@@ -18,6 +18,11 @@ namespace NodeStrategy
 
 
 
+        }
+
+        public override void OnTurnEnd()
+        {
+            throw new NotImplementedException();
         }
         
     }
