@@ -9,6 +9,10 @@ namespace NodeStrategy
     {
         List<Army> defenders;
         List<Army> attackers;
+
+        public bool DefendersFull { get => defenders.Count >= armyCap; }
+        public bool AttackersFull { get => attackers.Count >= armyCap; }
+
         public int armyCap { get; private set; }
         public void ResolveCombat()
         {
@@ -27,7 +31,7 @@ namespace NodeStrategy
         {
             if(army.controledBy == parent.controledBy)
             {
-                if(defenders.Count < armyCap)
+                if(!DefendersFull)
                 {
                     defenders.Add(army);
                     return true;
@@ -38,7 +42,7 @@ namespace NodeStrategy
                     return false;
                 }
             }
-            else if (attackers.Count < armyCap)
+            else if (!AttackersFull)
             {
                 if(attackers.Count == 0 || attackers[0].controledBy == army.controledBy)
                 {
