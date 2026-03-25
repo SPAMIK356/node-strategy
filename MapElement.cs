@@ -9,8 +9,12 @@ namespace NodeStrategy
 
         public List<Component> components;
         public int id;
+        public virtual int controledBy { get; set; }
+
 
         public abstract bool AcceptArmy(Army army);
         public abstract bool CanAcceptArmy();
+
+        public abstract void ChangeControlTo(int factionId);
     }
 }
