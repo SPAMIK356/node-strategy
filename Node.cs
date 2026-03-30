@@ -6,16 +6,23 @@
         public string name;
         public override int controledBy { get => base.controledBy; set => base.controledBy = value; }
 
-        public override bool TryAcceptArmy(Army army)
+        public override bool AcceptArmy(Army army)
         {
             var military = components.OfType<MilitaryComponent>().FirstOrDefault();
 
-            if(military != null)
+            if (military == null)
             {
-                return military.TryAddArmy(army);
+                return false;
             }
-            return false;
-        }
 
+            //TODO: завершити метод
+            
+
+        }
+        public override bool CanAcceptArmy()
+        {
+            return components.OfType<MilitaryComponent>().Any();
+
+        }
     }
 }

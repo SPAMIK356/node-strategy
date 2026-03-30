@@ -12,7 +12,8 @@ namespace NodeStrategy
         public virtual int controledBy { get; set; }
 
 
-        public abstract bool TryAcceptArmy(Army army);
+        public abstract bool AcceptArmy(Army army);
+        public abstract bool CanAcceptArmy();
 
     }
 }
