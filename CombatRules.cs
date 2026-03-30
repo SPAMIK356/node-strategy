@@ -8,6 +8,7 @@ namespace NodeStrategy
     {
 
         public static float combatLethality { get; private set; } = 0.15f;
+        public static float expWeight { get; private set; } = 0.5f;
 
     }
 }

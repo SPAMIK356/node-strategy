@@ -8,15 +8,28 @@ namespace NodeStrategy
 
     class MilitaryComponent : Component
     {
-        struct ArmyStats
+        protected enum ArmyState
+        {
+            Defending,
+            Attacking
+        }
+        protected struct ArmyStats
         {
             public int unitAmount;
             public float exp;
-
-            public ArmyStats(int unitAmount, float exp)
+            public ArmyState state;
+            public int damage 
+            { 
+                get 
+                {
+                    return Convert.ToInt32((float)unitAmount * exp * CombatRules.combatLethality*(1+CombatRules.expWeight));
+                } 
+            }
+            public ArmyStats(int unitAmount, float exp, ArmyState state)
             {
                 this.unitAmount = unitAmount;
                 this.exp = exp;
+                this.state = state;
             }
         }
         List<Army> defenders;
@@ -36,8 +49,8 @@ namespace NodeStrategy
                 return;
             }
 
-            ArmyStats attackersStats = new ArmyStats(GetTotalUnits(attackers), GetAverageXP(attackers));
-            ArmyStats defendersStats = new ArmyStats(GetTotalUnits(defenders), GetAverageXP(defenders));
+            ArmyStats attackersStats = new ArmyStats(GetTotalUnits(attackers), GetAverageXP(attackers), ArmyState.Attacking);
+            ArmyStats defendersStats = new ArmyStats(GetTotalUnits(defenders), GetAverageXP(defenders), ArmyState.Defending);
             
             
             
@@ -45,7 +58,7 @@ namespace NodeStrategy
         }
         protected int CalculateDamage(ArmyStats army, float factor)
         {
-
+            return Convert.ToInt32((float)army.damage * factor);
         }
         protected int GetTotalUnits(List<Army> armies)
         {
