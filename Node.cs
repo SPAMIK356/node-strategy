@@ -4,18 +4,25 @@
     {
 
         public string name;
-        public int controledBy;
+        public override int controledBy { get => base.controledBy; set => base.controledBy = value; }
 
         public override bool AcceptArmy(Army army)
         {
-            throw new NotImplementedException();
+            var military = components.OfType<MilitaryComponent>().FirstOrDefault();
+
+            if (military == null)
+            {
+                return false;
+            }
+
+
+            
+
         }
         public override bool CanAcceptArmy()
         {
-            if(components.Contains(x => { return x is MilitaryComponent;  }))
-            {
+            return components.OfType<MilitaryComponent>().Any();
 
-            }
         }
     }
 }

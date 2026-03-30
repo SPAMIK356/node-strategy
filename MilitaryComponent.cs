@@ -5,8 +5,20 @@ using System.Windows.Forms.Design;
 
 namespace NodeStrategy
 {
+
     class MilitaryComponent : Component
     {
+        struct ArmyStats
+        {
+            public int unitAmount;
+            public float exp;
+
+            public ArmyStats(int unitAmount, float exp)
+            {
+                this.unitAmount = unitAmount;
+                this.exp = exp;
+            }
+        }
         List<Army> defenders;
         List<Army> attackers;
 
@@ -14,6 +26,9 @@ namespace NodeStrategy
         public bool AttackersFull { get => attackers.Count >= armyCap; }
 
         public int armyCap { get; private set; }
+
+        float defenceFactor;
+
         public void ResolveCombat()
         {
             if(defenders.Count == 0 || attackers.Count == 0)
@@ -21,12 +36,30 @@ namespace NodeStrategy
                 return;
             }
 
-
+            ArmyStats attackersStats = new ArmyStats(GetTotalUnits(attackers), GetAverageXP(attackers));
+            ArmyStats defendersStats = new ArmyStats(GetTotalUnits(defenders), GetAverageXP(defenders));
+            
+            
+            
 
         }
+        protected int CalculateDamage(ArmyStats army, float factor)
+        {
 
+        }
+        protected int GetTotalUnits(List<Army> armies)
+        {
+            return armies.Sum(x => x.units);
+        }
 
-
+        protected float GetAverageXP(List<Army> armies)
+        {
+            return armies.Sum(x => x.units*x.exp)/GetTotalUnits(armies);
+        }
+        protected float GetAverageXP(List<Army> armies, int totalUnits)
+        {
+            return armies.Sum(x => x.units * x.exp) / totalUnits;
+        }
         public bool TryAddArmy(Army army)
         {
             if(army.controledBy == parent.controledBy)
