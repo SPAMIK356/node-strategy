@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Policy;
 using System.Text;
 
 namespace NodeStrategy
@@ -13,6 +14,7 @@ namespace NodeStrategy
         public float traverseProgress { get; private set; }
         public int controledBy { get; private set; }
         public MapElement currentPosition { get; private set; }
+        public bool alive { get => units > 0; }
         public Army(int units, float exp, float expCap,int unitCap, int controledBy, MapElement currentPosition)
         {
             this.units = unitCap < units ? unitCap : units;
@@ -22,7 +24,11 @@ namespace NodeStrategy
             this.expCap = expCap;
             this.currentPosition = currentPosition;
         }
-
+        public void Damage(int damage)
+        {
+            units -= damage;
+            units = units < 0 ? 0 : units;
+        }
         public int AddUnits(int amount, float expLevel) 
         { 
             int unitsLeft = (units+amount)-unitCap;
