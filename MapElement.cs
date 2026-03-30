@@ -15,6 +15,5 @@ namespace NodeStrategy
         public abstract bool AcceptArmy(Army army);
         public abstract bool CanAcceptArmy();
 
-        public abstract void ChangeControlTo(int factionId);
     }
 }
