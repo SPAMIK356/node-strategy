@@ -23,15 +23,11 @@ namespace NodeStrategy
             }
         }
 
-        public override bool AcceptArmy(Army army)
+
+
+        public override bool TryAcceptArmy(Army army)
         {
             armies.Add(army);
-
-            return true;
-        }
-
-        public override bool CanAcceptArmy()
-        {
             return true;
         }
 
