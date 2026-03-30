@@ -14,7 +14,7 @@ namespace NodeStrategy
         public float traverseProgress { get; private set; }
         public int controledBy { get; private set; }
         public MapElement currentPosition { get; private set; }
-        public bool alive { get => units > 0; }
+        public bool isDead { get => units > 0; }
         public Army(int units, float exp, float expCap,int unitCap, int controledBy, MapElement currentPosition)
         {
             this.units = unitCap < units ? unitCap : units;
