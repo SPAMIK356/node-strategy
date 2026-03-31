@@ -15,8 +15,7 @@
                 return false;
             }
 
-            //TODO: завершити метод
-            
+            return military.TryAddArmy(army);            
 
         }
         public override bool CanAcceptArmy(Army army)
