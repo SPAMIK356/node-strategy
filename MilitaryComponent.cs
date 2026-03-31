@@ -58,6 +58,8 @@ namespace NodeStrategy
             DamageArmyGroup(defenders, defendersStats, attackerDamage);
             DamageArmyGroup(attackers, attackersStats, defenderDamage);
 
+            ClearDefeatedArmies();
+
         }
         protected void DamageArmyGroup(List<Army> armies, ArmyStats defStats, int damage)
         {
