@@ -24,5 +24,10 @@
             return components.OfType<MilitaryComponent>().Any();
 
         }
+
+        public override bool TryRemoveArmy(Army army)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

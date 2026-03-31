@@ -35,5 +35,9 @@ namespace NodeStrategy
             return true;
         }
 
+        public override bool TryRemoveArmy(Army army)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
