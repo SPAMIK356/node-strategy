@@ -22,7 +22,7 @@ namespace NodeStrategy
                 return a.controledBy != b.controledBy;
             }
         }
-
+   
         public override bool AcceptArmy(Army army)
         {
             armies.Add(army);
@@ -33,6 +33,11 @@ namespace NodeStrategy
         public override bool CanAcceptArmy(Army army)
         {
             return true;
+        }
+
+        public override void OnTurnEnd()
+        {
+            throw new NotImplementedException();
         }
 
         public override bool TryRemoveArmy(Army army)
