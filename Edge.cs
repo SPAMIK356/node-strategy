@@ -30,7 +30,7 @@ namespace NodeStrategy
             return true;
         }
 
-        public override bool CanAcceptArmy()
+        public override bool CanAcceptArmy(Army army)
         {
             return true;
         }

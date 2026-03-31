@@ -13,7 +13,7 @@ namespace NodeStrategy
 
 
         public abstract bool AcceptArmy(Army army);
-        public abstract bool CanAcceptArmy();
+        public abstract bool CanAcceptArmy(Army army);
 
     }
 }
