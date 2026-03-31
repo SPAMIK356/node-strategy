@@ -4,7 +4,7 @@
     {
 
         public string name;
-        public override int controledBy { get => base.controledBy; set => base.controledBy = value; }
+        public override int controledBy { get => base.controledBy; protected set => base.controledBy = value; }
 
         public override bool AcceptArmy(Army army)
         {
