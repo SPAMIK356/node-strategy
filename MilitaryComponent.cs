@@ -112,6 +112,10 @@ namespace NodeStrategy
             ResolveCombat();
         }
 
+        public bool TryRemoveArmy(Army army)
+        {
+            return defenders.Remove(army) || attackers.Remove(army);
+        }
         public void ClearDefeatedArmies()
         {
             defenders.RemoveAll(x => x.isDead);
