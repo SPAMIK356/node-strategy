@@ -51,10 +51,17 @@ namespace NodeStrategy
 
             ArmyStats attackersStats = new ArmyStats(GetTotalUnits(attackers), GetAverageXP(attackers), ArmyState.Attacking);
             ArmyStats defendersStats = new ArmyStats(GetTotalUnits(defenders), GetAverageXP(defenders), ArmyState.Defending);
-            
-            
-            
 
+            int attackerDamage = attackersStats.damage;
+            int defenderDamage = defendersStats.damage;
+
+            DamageArmyGroup(defenders, defendersStats, attackerDamage);
+            DamageArmyGroup(attackers, attackersStats, defenderDamage);
+
+        }
+        protected void DamageArmyGroup(List<Army> armies, ArmyStats defStats, int damage)
+        {
+            armies.ForEach(x => x.Damage(damage / defStats.unitAmount));
         }
         protected int CalculateDamage(ArmyStats army, float factor)
         {
@@ -99,10 +106,15 @@ namespace NodeStrategy
             }
             return false;
         }
-
+        
         public override void OnTurnEnd()
         {
-            throw new NotImplementedException();
+            ResolveCombat();
+        }
+
+        public void ClearDefeatedArmies()
+        {
+            defenders.RemoveAll(x => x.isDead);
         }
         
     }
