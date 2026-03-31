@@ -27,12 +27,19 @@
 
         public override void OnTurnEnd()
         {
-            throw new NotImplementedException();
+            components.ForEach(x => x.OnTurnEnd());
         }
 
         public override bool TryRemoveArmy(Army army)
         {
-            throw new NotImplementedException();
+            var military = components.OfType<MilitaryComponent>().FirstOrDefault();
+
+            if(military == null)
+            {
+                return false;
+            }
+
+            return military.TryRemoveArmy(army);
         }
     }
 }
