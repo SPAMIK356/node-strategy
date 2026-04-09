@@ -11,9 +11,12 @@ namespace NodeStrategy
         public List<Army> armies = new List<Army>();
 
         public Node a, b;
-
+        public float terrainDifficulty;
         public int infrastructureLevel;
-        public float traverseCost;
+        public float traverseCost
+        {
+            get => 1 - (terrainDifficulty * infrastructureLevel);
+        }
 
         public bool isContested
         {
