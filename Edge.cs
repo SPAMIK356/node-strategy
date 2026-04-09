@@ -17,7 +17,13 @@ namespace NodeStrategy
         {
             get => 1 - (terrainDifficulty * infrastructureLevel);
         }
-
+        public Edge(Node a, Node b,  float terrainDifficulty, int infrastructureLevel)
+        {
+            this.a = a;
+            this.b = b;
+            this.terrainDifficulty = terrainDifficulty;
+            this.infrastructureLevel = infrastructureLevel;
+        }
         public bool isContested
         {
             get
