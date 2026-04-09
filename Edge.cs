@@ -22,7 +22,10 @@ namespace NodeStrategy
                 return a.controledBy != b.controledBy;
             }
         }
-   
+        public bool Conected(Node with)
+        {
+            return a == with || b == with;
+        }
         public override bool AcceptArmy(Army army)
         {
             armies.Add(army);
