@@ -17,7 +17,7 @@ namespace NodeStrategy
         {
             get => 1 - (terrainDifficulty * infrastructureLevel);
         }
-        public Edge(Node a, Node b,  float terrainDifficulty, int infrastructureLevel)
+        public Edge(string name, int id, Node a, Node b,  float terrainDifficulty, int infrastructureLevel) : base(name,id)
         {
             this.a = a;
             this.b = b;

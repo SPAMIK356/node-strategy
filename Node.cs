@@ -3,9 +3,15 @@
     class Node : MapElement
     {
 
-        public string name;
         public override int controledBy { get => base.controledBy; protected set => base.controledBy = value; }
-        List<Edge> edges;
+        List<Edge> edges = new List<Edge>();
+
+
+
+        public Node(string name, int id) : base(name,id)
+        {
+            
+        }
 
         public Edge? GetConnection(Node with)
         {

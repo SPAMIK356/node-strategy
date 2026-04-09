@@ -10,7 +10,12 @@ namespace NodeStrategy
         public List<Component> components;
         public int id;
         public virtual int controledBy { get; protected set; }
-
+        public MapElement(string name, int id)
+        {
+            components = new List<Component>();
+            Name = name;
+            this.id = id;
+        }
         public abstract void OnTurnEnd();
 
         public abstract bool AcceptArmy(Army army);
