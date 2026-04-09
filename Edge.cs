@@ -49,12 +49,11 @@ namespace NodeStrategy
 
         public override void OnTurnEnd()
         {
-            throw new NotImplementedException();
         }
 
         public override bool TryRemoveArmy(Army army)
         {
-            throw new NotImplementedException();
+            return armies.Remove(army);
         }
     }
 }
