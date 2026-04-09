@@ -5,7 +5,12 @@
 
         public string name;
         public override int controledBy { get => base.controledBy; protected set => base.controledBy = value; }
+        List<Edge> edges;
 
+        public Edge? GetConnection(Node with)
+        {
+            return edges.Where(x => x.Conected(with)).FirstOrDefault();
+        }
         public override bool AcceptArmy(Army army)
         {
             var military = components.OfType<MilitaryComponent>().FirstOrDefault();
