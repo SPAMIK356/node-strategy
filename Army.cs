@@ -7,6 +7,7 @@ namespace NodeStrategy
 {
     class Army
     {
+        public int id { get; private set; }
         public string name { get; private set; }
         public int units { get; private set; }
         public float exp { get; private set; }
@@ -16,8 +17,9 @@ namespace NodeStrategy
         public int controledBy { get; private set; }
         public MapElement currentPosition { get; private set; }
         public bool isDead { get => units <= 0; }
-        public Army(int units, float exp, float expCap,int unitCap, int controledBy, MapElement currentPosition, string name)
+        public Army(int id, int units, float exp, float expCap,int unitCap, int controledBy, MapElement currentPosition, string name)
         {
+            this.id = id;
             this.units = unitCap < units ? unitCap : units;
             this.exp = exp;
             this.unitCap = unitCap;
