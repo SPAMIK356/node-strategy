@@ -7,8 +7,8 @@ namespace NodeStrategy
     class Faction
     {
 
-        List<Army> armies;
-
+        List<int> armies;
+        public int id { get; protected set; }
 
         public bool DeleteArmy(Army army)
         {
