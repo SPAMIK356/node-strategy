@@ -4,8 +4,9 @@ using System.Text;
 
 namespace NodeStrategy
 {
-    class MoveCommand : Command
+    class MoveCommand : Command, ITargetedCommand
     {
+        public int subjectId { get => army.id; }
         private Army army;
         private Node targetElement;
         private float progress = 0;
@@ -40,7 +41,7 @@ namespace NodeStrategy
 
             if(edge == null)
             {
-                throw new Exception($"Вершина {sourceNode.name} не з'єднана з {targetElement.name}");
+                throw new Exception($"Вершина {sourceNode.Name} не з'єднана з {targetElement.Name}");
             }
 
             sourceNode.TryRemoveArmy(army);
