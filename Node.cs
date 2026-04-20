@@ -7,7 +7,7 @@
         List<Edge> edges = new List<Edge>();
 
 
-
+        
         public Node(string name, int id) : base(name,id)
         {
             //TODO: заповнити конструктор

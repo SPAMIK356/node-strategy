@@ -8,6 +8,7 @@ namespace NodeStrategy
     {
         public virtual bool AddComponent(Component component)
         {
+            component.parent = this;
             components.Add(component);
             return true;
         }
