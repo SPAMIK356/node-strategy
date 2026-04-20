@@ -13,9 +13,11 @@ namespace NodeStrategy
         public Node a, b;
         public float terrainDifficulty;
         public int infrastructureLevel;
+        public const float infrastructureEfficiency = 0.5f;
+        public const float baseStep = 1;
         public float traverseCost
         {
-            get => 1 - (terrainDifficulty * infrastructureLevel);
+            get => (baseStep * (1 + (infrastructureLevel * infrastructureEfficiency))) / terrainDifficulty;
         }
         public Edge(string name, int id, Node a, Node b,  float terrainDifficulty, int infrastructureLevel) : base(name,id)
         {

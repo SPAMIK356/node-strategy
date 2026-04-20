@@ -12,6 +12,8 @@ namespace NodeStrategy
         public Faction currentFaction { get => factions[turnOrder[currentTurnIndex]]; }
         private int currentTurnIndex = 0;
 
+        
+
         public List<Command> plannedCommands = new List<Command>();
 
         public List<Command> activeCommands = new List<Command>();

@@ -10,12 +10,29 @@
 
         public Node(string name, int id) : base(name,id)
         {
-            
+            //TODO: заповнити конструктор
         }
+        public bool TryConnect(Node node, Edge edge)
+        {
+            if (IsConnected(node)) return false;
 
+            edges.Add(edge);
+
+            node.TryConnect(this, edge);
+
+            return true;
+        }
+        public bool IsConnected(Node with)
+        {
+            return edges.Any(x => x.a == with ||  x.b == with);
+        }
         public Edge? GetConnection(Node with)
         {
             return edges.Where(x => x.Conected(with)).FirstOrDefault();
+        }
+        public List<Node> GetConnectedNodes()
+        {
+            return edges.Select(x => x.a == this ? x.b : x.a).ToList();
         }
         public override bool AcceptArmy(Army army)
         {
@@ -31,8 +48,9 @@
         }
         public override bool CanAcceptArmy(Army army)
         {
-            return components.OfType<MilitaryComponent>().Any();
-
+            var component = components.OfType<MilitaryComponent>().FirstOrDefault();
+            
+            return component == null ? false : component.CanAcceptArmy(army);
         }
 
         public override void OnTurnEnd()

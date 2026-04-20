@@ -9,7 +9,7 @@ namespace NodeStrategy
         public int subjectId { get => army.id; }
         private Army army;
         private Node targetElement;
-        private float progress = 0;
+        public float progress { get; private set; } = 0;
         private const float progressGoal = 1f;
         public override string Name { get; protected set; }
         public MoveCommand(Army army, Node target)
@@ -29,7 +29,8 @@ namespace NodeStrategy
 
         public override bool IsValid()
         {
-            throw new NotImplementedException();
+            if(!targetElement.CanAcceptArmy(army)) return false;
+            return true;
         }
 
         public override void OnStart()
