@@ -18,7 +18,7 @@ namespace NodeStrategy
             table.DataSource = manager.plannedCommands;
 
             var a = new Node("City 1", 0);
-            a.components.Add(new MilitaryComponent(10, 1));
+            a.AddComponent(new MilitaryComponent(10, 1));
 
 
             var b = new Node("City 2", 1);
