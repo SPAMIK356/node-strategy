@@ -50,6 +50,8 @@ namespace NodeStrategy
 
             edge.AcceptArmy(army);
 
+            army.ChangePosition(edge);
+
         }
 
         public override void OnFinish()
@@ -57,6 +59,7 @@ namespace NodeStrategy
             army.currentPosition.TryRemoveArmy(army);
 
             targetElement.AcceptArmy(army);
+            army.ChangePosition(targetElement);
         }
     }
 }

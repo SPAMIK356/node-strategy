@@ -22,6 +22,8 @@ namespace NodeStrategy
 
 
             var b = new Node("City 2", 1);
+            b.AddComponent(new MilitaryComponent(10, 1));
+
             var road = new Edge("Road", 2, a, b, 0.1f, 1);
             a.TryConnect(b, road);
             manager.factions.Add(4, new Faction());
@@ -63,6 +65,14 @@ namespace NodeStrategy
             activeComands.DataSource = null;
             activeComands.DataSource = manager.activeCommands;
             DisplayArmyState(army);
+
+            nodeSelection.Items.Clear();
+            nodeSelection.SelectedItem = null;
+            if(army.currentPosition is Node node)
+            {
+                nodeSelection.Items.AddRange(node.GetConnectedNodes().ToArray());
+            }
+
             Update();
         }
     }
