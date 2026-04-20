@@ -41,7 +41,7 @@ namespace NodeStrategy
         public int armyCap { get; private set; }
 
         float defenceFactor;
-        public MilitaryComponent(MapElement parent, int armyCap, float defenceFactor) : base(parent)
+        public MilitaryComponent(int armyCap, float defenceFactor)
         {
             this.armyCap = armyCap;
             this.defenceFactor = defenceFactor;
