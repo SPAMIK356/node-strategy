@@ -60,7 +60,7 @@
 
         public override bool TryRemoveArmy(Army army)
         {
-            var military = components.OfType<MilitaryComponent>().FirstOrDefault();
+            var military = GetComponent<MilitaryComponent>();
 
             if(military == null)
             {
