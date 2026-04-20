@@ -32,8 +32,8 @@ namespace NodeStrategy
                 this.state = state;
             }
         }
-        List<Army> defenders;
-        List<Army> attackers;
+        List<Army> defenders = new();
+        List<Army> attackers = new();
 
         public bool DefendersFull { get => defenders.Count >= armyCap; }
         public bool AttackersFull { get => attackers.Count >= armyCap; }
@@ -41,7 +41,11 @@ namespace NodeStrategy
         public int armyCap { get; private set; }
 
         float defenceFactor;
-
+        public MilitaryComponent(int armyCap, float defenceFactor)
+        {
+            this.armyCap = armyCap;
+            this.defenceFactor = defenceFactor;
+        }
         public void ResolveCombat()
         {
             if(defenders.Count == 0 || attackers.Count == 0)
@@ -52,7 +56,7 @@ namespace NodeStrategy
             ArmyStats attackersStats = new ArmyStats(GetTotalUnits(attackers), GetAverageXP(attackers), ArmyState.Attacking);
             ArmyStats defendersStats = new ArmyStats(GetTotalUnits(defenders), GetAverageXP(defenders), ArmyState.Defending);
 
-            int attackerDamage = attackersStats.damage;
+            int attackerDamage = (int)(attackersStats.damage / defenceFactor);
             int defenderDamage = defendersStats.damage;
 
             DamageArmyGroup(defenders, defendersStats, attackerDamage);
@@ -108,7 +112,20 @@ namespace NodeStrategy
             }
             return false;
         }
-        
+        public bool CanAcceptArmy(Army army)
+        {
+            if(army.controledBy == parent.controledBy)
+            {
+                if(defenders.Count >= armyCap)
+                    return false;
+            }
+            else
+            {
+                if (attackers.Count >= armyCap)
+                    return false;
+            }
+            return true;
+        }
         public override void OnTurnEnd()
         {
             ResolveCombat();

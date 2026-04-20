@@ -6,9 +6,8 @@ namespace NodeStrategy
 {
     abstract class Component
     {
-        public MapElement parent { get; private set; }
+        public MapElement parent { get; set; }
         
-
         public abstract void OnTurnEnd();
     }
 }

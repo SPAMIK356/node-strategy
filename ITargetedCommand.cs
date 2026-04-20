@@ -4,11 +4,9 @@ using System.Text;
 
 namespace NodeStrategy
 {
-    class Faction
+    interface ITargetedCommand
     {
-
-        public int id { get; protected set; }
-
+        public int subjectId { get; }
 
     }
 }

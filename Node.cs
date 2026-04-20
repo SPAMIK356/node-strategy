@@ -3,9 +3,37 @@
     class Node : MapElement
     {
 
-        public string name;
-        public override int controledBy { get => base.controledBy; set => base.controledBy = value; }
+        public override int controledBy { get => base.controledBy; protected set => base.controledBy = value; }
+        List<Edge> edges = new List<Edge>();
 
+
+        
+        public Node(string name, int id) : base(name,id)
+        {
+            //TODO: заповнити конструктор
+        }
+        public bool TryConnect(Node node, Edge edge)
+        {
+            if (IsConnected(node)) return false;
+
+            edges.Add(edge);
+
+            node.TryConnect(this, edge);
+
+            return true;
+        }
+        public bool IsConnected(Node with)
+        {
+            return edges.Any(x => x.a == with ||  x.b == with);
+        }
+        public Edge? GetConnection(Node with)
+        {
+            return edges.Where(x => x.Conected(with)).FirstOrDefault();
+        }
+        public List<Node> GetConnectedNodes()
+        {
+            return edges.Select(x => x.a == this ? x.b : x.a).ToList();
+        }
         public override bool AcceptArmy(Army army)
         {
             var military = components.OfType<MilitaryComponent>().FirstOrDefault();
@@ -20,8 +48,9 @@
         }
         public override bool CanAcceptArmy(Army army)
         {
-            return components.OfType<MilitaryComponent>().Any();
-
+            var component = components.OfType<MilitaryComponent>().FirstOrDefault();
+            
+            return component == null ? false : component.CanAcceptArmy(army);
         }
 
         public override void OnTurnEnd()
@@ -31,7 +60,7 @@
 
         public override bool TryRemoveArmy(Army army)
         {
-            var military = components.OfType<MilitaryComponent>().FirstOrDefault();
+            var military = GetComponent<MilitaryComponent>();
 
             if(military == null)
             {
