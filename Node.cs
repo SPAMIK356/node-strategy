@@ -46,6 +46,10 @@
             return military.TryAddArmy(army);            
 
         }
+        public void SetControl(int by)
+        {
+            controledBy = by;
+        }
         public override bool CanAcceptArmy(Army army)
         {
             var component = components.OfType<MilitaryComponent>().FirstOrDefault();
