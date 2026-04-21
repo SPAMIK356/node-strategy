@@ -17,11 +17,11 @@ namespace NodeStrategy
         {
             table.DataSource = manager.plannedCommands;
 
-            var a = new Node("City 1", 0);
+            var a = new Node("City 1", 0,0);
             a.AddComponent(new MilitaryComponent(10, 1));
 
 
-            var b = new Node("City 2", 1);
+            var b = new Node("City 2", 1,1);
             b.AddComponent(new MilitaryComponent(10, 1));
 
             var road = new Edge("Road", 2, a, b, 0.1f, 1);
@@ -33,8 +33,12 @@ namespace NodeStrategy
             activeComands.DataSource = manager.activeCommands;
             manager.turnOrder.Add(4);
 
-            army = new Army(3, 100, 0, 5, 100, 0, a, "Army");
+            army = new Army(3, 100, 2, 5, 100, 0, a, "Army");
             a.AcceptArmy(army);
+
+            var enArmy = new Army(4, 100, 1, 5, 100, 1, b, "Enemy");
+            b.AcceptArmy(enArmy);
+
             nodeSelection.Items.AddRange((army.currentPosition as Node).GetConnectedNodes().ToArray());
             nodeSelection.ValueMember = "Name";
             nodeSelection.Update();
