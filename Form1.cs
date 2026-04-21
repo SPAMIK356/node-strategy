@@ -17,11 +17,11 @@ namespace NodeStrategy
         {
             table.DataSource = manager.plannedCommands;
 
-            var a = new Node("City 1", 0,0);
+            var a = new Node("City 1", 0, 0);
             a.AddComponent(new MilitaryComponent(10, 1));
 
 
-            var b = new Node("City 2", 1,1);
+            var b = new Node("City 2", 1, 1);
             b.AddComponent(new MilitaryComponent(10, 1));
 
             var road = new Edge("Road", 2, a, b, 0.1f, 1);
@@ -72,12 +72,17 @@ namespace NodeStrategy
 
             nodeSelection.Items.Clear();
             nodeSelection.SelectedItem = null;
-            if(army.currentPosition is Node node)
+            if (army.currentPosition is Node node)
             {
                 nodeSelection.Items.AddRange(node.GetConnectedNodes().ToArray());
             }
 
             Update();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

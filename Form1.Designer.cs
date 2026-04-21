@@ -98,7 +98,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1902, 1033);
             Controls.Add(activeComands);
             Controls.Add(giveOrder);
             Controls.Add(nodeSelection);
@@ -107,6 +107,8 @@
             Controls.Add(nextTurn);
             Name = "Form1";
             Text = "Form1";
+            WindowState = FormWindowState.Maximized;
+            Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)table).EndInit();
             ((System.ComponentModel.ISupportInitialize)activeComands).EndInit();
             ResumeLayout(false);
