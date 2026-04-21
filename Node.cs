@@ -8,9 +8,9 @@
 
 
         
-        public Node(string name, int id) : base(name,id)
+        public Node(string name, int id, int controledBy) : base(name,id)
         {
-            //TODO: заповнити конструктор
+            this.controledBy = controledBy;
         }
         public bool TryConnect(Node node, Edge edge)
         {

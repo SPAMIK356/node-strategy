@@ -72,7 +72,7 @@ namespace NodeStrategy
         }
         protected void DamageArmyGroup(List<Army> armies, ArmyStats defStats, int damage)
         {
-            armies.ForEach(x => x.Damage(damage / defStats.unitAmount));
+            armies.ForEach(x => x.Damage(damage / armies.Count));
         }
         protected int CalculateDamage(ArmyStats army, float factor)
         {
