@@ -63,7 +63,10 @@ namespace NodeStrategy
             DamageArmyGroup(attackers, attackersStats, defenderDamage);
 
             ClearDefeatedArmies();
-
+            if(defenders.Count == 0 && attackers.Count > 0 && parent is Node node)
+            {
+                node.SetControl(attackers[0].controledBy);
+            }
         }
         protected void DamageArmyGroup(List<Army> armies, ArmyStats defStats, int damage)
         {
