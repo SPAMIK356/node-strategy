@@ -66,6 +66,8 @@ namespace NodeStrategy
             if(defenders.Count == 0 && attackers.Count > 0 && parent is Node node)
             {
                 node.SetControl(attackers[0].controledBy);
+                defenders.AddRange(attackers);
+                attackers.Clear();
             }
         }
         protected void DamageArmyGroup(List<Army> armies, ArmyStats defStats, int damage)
@@ -141,6 +143,7 @@ namespace NodeStrategy
         public void ClearDefeatedArmies()
         {
             defenders.RemoveAll(x => x.isDead);
+            attackers.RemoveAll(x => x.isDead);
         }
         
     }
