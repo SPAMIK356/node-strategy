@@ -16,13 +16,23 @@ namespace NodeStrategy
             InitializeComponent();
         }
 
-        public void DisplayInfo(Node node)
+        public void DisplayInfo(MapElement mapElement)
         {
-            cityName.Text = node.Name;
+            cityName.Text = mapElement.Name;
 
-            description.Text = node.GetDescription();
+            description.Text = mapElement.GetDescription();
             
             Enabled = true;
+
+            if(mapElement is Edge)
+            {
+                recruitArmy.Enabled = false;
+            }
+            else
+            {
+                recruitArmy.Enabled = true;
+            }
+
 
             Update();
         }
