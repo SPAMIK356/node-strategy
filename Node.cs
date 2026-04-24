@@ -1,6 +1,6 @@
 ﻿namespace NodeStrategy
 {
-    class Node : MapElement
+    public class Node : MapElement
     {
 
         public override int controledBy { get => base.controledBy; protected set => base.controledBy = value; }
@@ -72,6 +72,19 @@
             }
 
             return military.TryRemoveArmy(army);
+        }
+        public override string GetDescription()
+        {
+            var baseDecription = base.GetDescription();
+
+            var descrtiption = $"Місто\n" +
+                $"{baseDecription}";
+
+            foreach(var comp in components)
+            {
+                descrtiption += '\n'+comp.GetDescription()+'\n';
+            }
+            return descrtiption;
         }
     }
 }

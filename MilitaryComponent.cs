@@ -145,6 +145,49 @@ namespace NodeStrategy
             defenders.RemoveAll(x => x.isDead);
             attackers.RemoveAll(x => x.isDead);
         }
-        
+        private string GetArmyInfo(Army army)
+        {
+            return $"{army.name}, {army.units} юнітів, {army.exp} досвіду";
+        }
+        //TODO: доробити генерацію опису
+        public override string GetDescription()
+        {
+            string defendersDescription = "";
+            string attackersDescription = "";
+
+
+            if(defenders.Count == 0)
+            {
+                defendersDescription = "Захисників нема!";
+            }
+            else
+            {
+                defendersDescription = $"{defenders.Count}/{armyCap} захисників\n";
+                foreach(Army army in defenders)
+                {
+                    defendersDescription += GetArmyInfo(army) + '\n';
+                }
+            }
+
+            if(attackers.Count == 0)
+            {
+                attackersDescription = "Атакуючх нема!";
+            }
+            else
+            {
+                attackersDescription = $"{attackers.Count}/{armyCap} атакуючих\n";
+
+                foreach (Army army in attackers)
+                {
+                    attackersDescription += GetArmyInfo(army) + '\n';
+                }
+            }
+
+
+            return $"Армії:\n" +
+                $"{defendersDescription}\n" +
+                $"{attackersDescription}\n";
+
+        }
     }
 }

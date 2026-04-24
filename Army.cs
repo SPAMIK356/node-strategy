@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NodeStrategy
 {
-    class Army
+    public class Army
     {
         public int id { get; private set; }
         public string name { get; private set; }

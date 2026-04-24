@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NodeStrategy
 {
-    class Edge : MapElement
+    public class Edge : MapElement
     {
 
         public List<Army> armies = new List<Army>();

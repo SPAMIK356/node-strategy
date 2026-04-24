@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NodeStrategy
 {
-    abstract class MapElement
+    public abstract class MapElement
     {
         public virtual bool AddComponent(Component component)
         {
@@ -15,6 +15,10 @@ namespace NodeStrategy
         public virtual T? GetComponent<T>() where T : Component
         {
             return components.OfType<T>().FirstOrDefault();
+        }
+        public virtual T[] GetComponents<T>()
+        {
+            return components.OfType<T>().ToArray();
         }
         public string Name { get; protected set; }
         protected List<Component> components;
@@ -33,5 +37,10 @@ namespace NodeStrategy
 
         public abstract bool TryRemoveArmy(Army army);
 
+        public virtual string GetDescription()
+        {
+            return $"ID: {id}\n" +
+                $"Контролюється фракцією {controledBy}\n";
+        }
     }
 }
