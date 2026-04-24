@@ -32,6 +32,7 @@
             description = new Label();
             upgrade = new Button();
             recruitArmy = new Button();
+            backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             SuspendLayout();
             // 
             // cityName
@@ -94,5 +95,6 @@
         private Label description;
         private Button upgrade;
         private Button recruitArmy;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
