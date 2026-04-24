@@ -13,7 +13,7 @@ namespace NodeStrategy
     public partial class CityInspector : UserControl
     {
         public MapElement inspectedElement;
-        public Action<Node> OnRecruitBUttonClicked;
+        public event Action<Node> OnRecruitBUttonClicked;
         public CityInspector()
         {
             InitializeComponent();
