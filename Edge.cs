@@ -26,7 +26,7 @@ namespace NodeStrategy
             this.terrainDifficulty = terrainDifficulty;
             this.infrastructureLevel = infrastructureLevel;
         }
-        public bool isContested
+        public override bool isContested
         {
             get
             {

@@ -34,7 +34,8 @@ namespace NodeStrategy
         }
         List<Army> defenders = new();
         List<Army> attackers = new();
-
+        public int defendersCount { get => defenders.Count; }
+        public int attackersCount { get => attackers.Count;  }
         public bool DefendersFull { get => defenders.Count >= armyCap; }
         public bool AttackersFull { get => attackers.Count >= armyCap; }
 
@@ -149,7 +150,7 @@ namespace NodeStrategy
         {
             return $"{army.name}, {army.units} юнітів, {army.exp} досвіду";
         }
-        //TODO: доробити генерацію опису
+        
         public override string GetDescription()
         {
             string defendersDescription = "";

@@ -3,8 +3,12 @@ using System.ComponentModel;
 
 namespace NodeStrategy
 {
-    abstract class Command
+    public abstract class Command
     {
+        public Command(int executerId)
+        {
+            this.executerId = executerId;
+        }
         public virtual string errorMessage { get; protected set; }
         public virtual string startMessage { get; protected set;  }
         public virtual string successMessage { get; protected set;  }

@@ -28,23 +28,36 @@
         /// </summary>
         private void InitializeComponent()
         {
-            panel1 = new Panel();
+            cityInspector1 = new CityInspector();
+            endTurn = new Button();
             SuspendLayout();
             // 
-            // panel1
+            // cityInspector1
             // 
-            panel1.Dock = DockStyle.Right;
-            panel1.Location = new Point(1652, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(250, 1033);
-            panel1.TabIndex = 0;
+            cityInspector1.Location = new Point(1572, -1);
+            cityInspector1.Name = "cityInspector1";
+            cityInspector1.Size = new Size(332, 1033);
+            cityInspector1.TabIndex = 0;
+            // 
+            // endTurn
+            // 
+            endTurn.Cursor = Cursors.Hand;
+            endTurn.Font = new Font("Segoe UI", 15F, FontStyle.Bold);
+            endTurn.Location = new Point(32, 910);
+            endTurn.Name = "endTurn";
+            endTurn.Size = new Size(208, 76);
+            endTurn.TabIndex = 1;
+            endTurn.Text = "Завершити Хід";
+            endTurn.UseVisualStyleBackColor = true;
+            endTurn.Click += endTurn_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1902, 1033);
-            Controls.Add(panel1);
+            Controls.Add(cityInspector1);
+            Controls.Add(endTurn);
             Name = "Form1";
             Text = "Form1";
             WindowState = FormWindowState.Maximized;
@@ -52,7 +65,7 @@
         }
 
         #endregion
-
-        private Panel panel1;
+        private CityInspector cityInspector1;
+        private Button endTurn;
     }
 }

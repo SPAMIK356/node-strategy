@@ -6,6 +6,7 @@ namespace NodeStrategy
 {
     public abstract class MapElement
     {
+        public abstract bool isContested { get; }
         public virtual bool AddComponent(Component component)
         {
             component.parent = this;

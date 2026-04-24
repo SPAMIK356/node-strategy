@@ -6,7 +6,19 @@
         public override int controledBy { get => base.controledBy; protected set => base.controledBy = value; }
         List<Edge> edges = new List<Edge>();
 
-
+        public override bool isContested { get 
+            {
+                var comp = GetComponent<MilitaryComponent>();
+                if(comp != null)
+                {
+                    return comp.attackersCount > 0;
+                }
+                else
+                {
+                    return false;
+                }
+            } 
+        }
         
         public Node(string name, int id, int controledBy) : base(name,id)
         {

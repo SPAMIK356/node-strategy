@@ -13,7 +13,7 @@ namespace NodeStrategy
     public partial class CityInspector : UserControl
     {
         public MapElement inspectedElement;
-        public event Action<Node> OnRecruitBUttonClicked;
+        public event Action<Node> OnRecruitButtonClicked;
         public CityInspector()
         {
             InitializeComponent();
@@ -43,7 +43,7 @@ namespace NodeStrategy
 
         private void recruitArmy_Click(object sender, EventArgs e)
         {
-            OnRecruitBUttonClicked?.Invoke(inspectedElement as Node);
+            OnRecruitButtonClicked?.Invoke(inspectedElement as Node);
         }
     }
 }

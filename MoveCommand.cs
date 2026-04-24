@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NodeStrategy
 {
-    class MoveCommand : Command, ITargetedCommand
+    public class MoveCommand : Command, ITargetedCommand
     {
         public int subjectId { get => army.id; }
         private Army army;
@@ -12,7 +12,7 @@ namespace NodeStrategy
         public float progress { get; private set; } = 0;
         private const float progressGoal = 1f;
         public override string Name { get; protected set; }
-        public MoveCommand(Army army, Node target)
+        public MoveCommand(int executerId, Army army, Node target) : base(executerId)
         {
             Name = $"Переміщення {army.name} до {target.Name}";
             this.army = army;

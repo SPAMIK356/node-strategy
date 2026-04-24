@@ -57,18 +57,18 @@
             // upgrade
             // 
             upgrade.Enabled = false;
-            upgrade.Location = new Point(16, 321);
+            upgrade.Location = new Point(16, 752);
             upgrade.Name = "upgrade";
-            upgrade.Size = new Size(136, 41);
+            upgrade.Size = new Size(281, 41);
             upgrade.TabIndex = 2;
             upgrade.Text = "Покращити";
             upgrade.UseVisualStyleBackColor = true;
             // 
             // recruitArmy
             // 
-            recruitArmy.Location = new Point(16, 390);
+            recruitArmy.Location = new Point(16, 824);
             recruitArmy.Name = "recruitArmy";
-            recruitArmy.Size = new Size(136, 41);
+            recruitArmy.Size = new Size(281, 41);
             recruitArmy.TabIndex = 3;
             recruitArmy.Text = "Найняти армію";
             recruitArmy.UseVisualStyleBackColor = true;
@@ -83,7 +83,7 @@
             Controls.Add(description);
             Controls.Add(cityName);
             Name = "CityInspector";
-            Size = new Size(250, 1033);
+            Size = new Size(317, 1033);
             ResumeLayout(false);
             PerformLayout();
         }
