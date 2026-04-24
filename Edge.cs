@@ -64,7 +64,7 @@ namespace NodeStrategy
 
             var controled = isContested ? $"Поділене між фракцією {a.controledBy} та {b.controledBy}" : $"Контролюється фракцією {a.controledBy}";
 
-            description += $"Дорога" +
+            description += $"Дорога\n" +
                 $"З'єднує міста {a.Name} та {b.Name}\n" +
                 $"{controled}\n" +
                 $"Складність ландшафту: {terrainDifficulty}\n" +
