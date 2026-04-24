@@ -60,9 +60,14 @@ namespace NodeStrategy
 
         public override string GetDescription()
         {
-            var description = base.GetDescription();
+            var description = $"ID: {id}\n";
 
-            description += $"Складність ландшафту: {terrainDifficulty}\n" +
+            var controled = isContested ? $"Поділене між фракцією {a.controledBy} та {b.controledBy}" : $"Контролюється фракцією {a.controledBy}";
+
+            description += $"Дорога" +
+                $"З'єднує міста {a.Name} та {b.Name}\n" +
+                $"{controled}\n" +
+                $"Складність ландшафту: {terrainDifficulty}\n" +
                 $"Рівень інфраструктури: {infrastructureLevel}";
 
             return description;
