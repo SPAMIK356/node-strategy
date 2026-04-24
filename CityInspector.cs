@@ -9,8 +9,11 @@ using System.Windows.Forms;
 
 namespace NodeStrategy
 {
+
     public partial class CityInspector : UserControl
     {
+        public MapElement inspectedElement;
+        public Action<Node> OnRecruitBUttonClicked;
         public CityInspector()
         {
             InitializeComponent();
@@ -18,13 +21,14 @@ namespace NodeStrategy
 
         public void DisplayInfo(MapElement mapElement)
         {
+            inspectedElement = mapElement;
             cityName.Text = mapElement.Name;
 
             description.Text = mapElement.GetDescription();
-            
+
             Enabled = true;
 
-            if(mapElement is Edge)
+            if (mapElement is Edge)
             {
                 recruitArmy.Enabled = false;
             }
@@ -35,6 +39,11 @@ namespace NodeStrategy
 
 
             Update();
+        }
+
+        private void recruitArmy_Click(object sender, EventArgs e)
+        {
+            OnRecruitBUttonClicked?.Invoke(inspectedElement as Node);
         }
     }
 }

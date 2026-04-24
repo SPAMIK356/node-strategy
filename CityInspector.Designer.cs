@@ -72,6 +72,7 @@
             recruitArmy.TabIndex = 3;
             recruitArmy.Text = "Найняти армію";
             recruitArmy.UseVisualStyleBackColor = true;
+            recruitArmy.Click += recruitArmy_Click;
             // 
             // CityInspector
             // 
