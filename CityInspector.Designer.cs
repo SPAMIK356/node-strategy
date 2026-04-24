@@ -56,6 +56,7 @@
             // 
             // upgrade
             // 
+            upgrade.Enabled = false;
             upgrade.Location = new Point(16, 321);
             upgrade.Name = "upgrade";
             upgrade.Size = new Size(136, 41);
