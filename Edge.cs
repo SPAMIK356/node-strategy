@@ -57,5 +57,15 @@ namespace NodeStrategy
         {
             return armies.Remove(army);
         }
+
+        public override string GetDescription()
+        {
+            var description = base.GetDescription();
+
+            description += $"Складність ландшафту: {terrainDifficulty}\n" +
+                $"Рівень інфраструктури: {infrastructureLevel}";
+
+            return description;
+        }
     }
 }
