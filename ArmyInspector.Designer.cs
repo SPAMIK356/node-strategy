@@ -94,6 +94,7 @@
             currentPosition.TabIndex = 8;
             currentPosition.TabStop = true;
             currentPosition.Text = "currentPosition";
+            currentPosition.LinkClicked += currentPosition_LinkClicked;
             // 
             // ArmyInspector
             // 

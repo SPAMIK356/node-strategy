@@ -10,6 +10,8 @@ namespace NodeStrategy
 {
     public partial class ArmyInspector : UserControl
     {
+        Action<MapElement> OnLinkLabelClicked;
+        private MapElement armyPosition;
         public ArmyInspector()
         {
             InitializeComponent();
@@ -17,15 +19,17 @@ namespace NodeStrategy
 
         public void DisplayInfo(Army army, Command? asociatedCommand, int perspective)
         {
+            armyPosition = army.currentPosition;
+
             armyName.Text = army.name;
 
             if (perspective != army.controledBy) SetInteractiveElements(false);
             else SetInteractiveElements(true);
-
+            currentPosition.
             string description = $"контролюються фракцією {army.controledBy}" +
                 $"Юніти: {army.units}/{army.unitCap}\n" +
                 $"Рівень досвіду: {army.exp}/{army.expCap}\n";
-
+            if (army.controledBy != perspective) SetInteractiveElements(false);
             if (army.currentPosition is Node node)
             {
                 if (node.isContested)
@@ -38,15 +42,18 @@ namespace NodeStrategy
                     if (asociatedCommand != null)
                     {
                         description += asociatedCommand.description;
-
+                        SetInteractiveElements(false);
                     }
                     else
                     {
-                        SetInteractiveElements(false);
+                        nodeSelection.DataSource = null;
+                        nodeSelection.DataSource = node.GetConnectedNodes();
+                        nodeSelection.DisplayMember = "Name";
                     }
                 }
             }
-            else if (army.currentPosition is Edge edge) {
+            else if (army.currentPosition is Edge edge)
+            {
                 if (asociatedCommand == null)
                 {
                     throw new Exception("Армія знаходиться на ребрі без команди!");
@@ -64,6 +71,12 @@ namespace NodeStrategy
         {
             moveOrder.Enabled = state;
             nodeSelection.Enabled = state;
+        }
+
+        private void currentPosition_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Visible = false;
+            OnLinkLabelClicked(armyPosition);
         }
     }
 }
