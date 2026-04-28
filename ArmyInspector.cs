@@ -31,7 +31,7 @@ namespace NodeStrategy
 
             if (perspective != army.controledBy) SetInteractiveElements(false);
             else SetInteractiveElements(true);
-            currentPosition.
+
             string description = $"контролюються фракцією {army.controledBy}" +
                 $"Юніти: {army.units}/{army.unitCap}\n" +
                 $"Рівень досвіду: {army.exp}/{army.expCap}\n";
