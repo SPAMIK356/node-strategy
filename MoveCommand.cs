@@ -7,6 +7,9 @@ namespace NodeStrategy
     public class MoveCommand : Command, ITargetedCommand
     {
         public int subjectId { get => army.id; }
+
+        public override string description { get; protected set; }
+
         private Army army;
         private Node targetElement;
         public float progress { get; private set; } = 0;
@@ -17,6 +20,8 @@ namespace NodeStrategy
             Name = $"Переміщення {army.name} до {target.Name}";
             this.army = army;
             this.targetElement = target;
+
+            description = $"{army.name} переміщується до {targetElement.Name}";
         }
         public override void Execute()
         {
