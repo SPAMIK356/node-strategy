@@ -27,10 +27,10 @@ namespace NodeStrategy
         private readonly Faction faction;
         public RecruitCommand(int executerId, Node targetNode, ArmyTemplate template, Faction faction) : base(executerId) 
         {
-            this.faction = faction;
             this.targetNode = targetNode;
             this.template = template;
             subjectId = targetNode.id;
+            this.faction = faction;
 
             armyToAdd = new Army(IDReg.NextID,template.Units,
                 template.Exp,
@@ -61,7 +61,7 @@ namespace NodeStrategy
         public override void OnStart()
         {
             targetNode.AcceptArmy(armyToAdd);
-            faction.ModifyGold(-template.Gold);
+            GameEvents.TriggerGoldGeneration(executerId, -template.Gold);
 
             finishedExectuing = true;
         }
