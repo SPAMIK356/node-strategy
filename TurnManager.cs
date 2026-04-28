@@ -18,7 +18,14 @@ namespace NodeStrategy
 
         public List<Command> activeCommands = new List<Command>();
         
-
+        public TurnManager()
+        {
+            GameEvents.OnGoldAdd += GenerateGold;
+        }
+        ~TurnManager()
+        {
+            GameEvents.OnGoldAdd -= GenerateGold;
+        }
         public void EndTurn()
         {
             activeCommands.RemoveAll(x => !x.IsValid());
@@ -63,6 +70,11 @@ namespace NodeStrategy
             }
             plannedCommands.Add(command);
 
+        }
+
+        public void GenerateGold(int factionId, int amount)
+        {
+            factions[factionId].ModifyGold(amount);
         }
     }
 }

@@ -28,22 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            cityInspector1 = new CityInspector();
             endTurn = new Button();
+            cityInspector2 = new CityInspector();
             SuspendLayout();
-            // 
-            // cityInspector1
-            // 
-            cityInspector1.Location = new Point(1572, -1);
-            cityInspector1.Name = "cityInspector1";
-            cityInspector1.Size = new Size(332, 1033);
-            cityInspector1.TabIndex = 0;
             // 
             // endTurn
             // 
             endTurn.Cursor = Cursors.Hand;
             endTurn.Font = new Font("Segoe UI", 15F, FontStyle.Bold);
-            endTurn.Location = new Point(32, 910);
+            endTurn.Location = new Point(12, 905);
             endTurn.Name = "endTurn";
             endTurn.Size = new Size(208, 76);
             endTurn.TabIndex = 1;
@@ -51,12 +44,19 @@
             endTurn.UseVisualStyleBackColor = true;
             endTurn.Click += endTurn_Click;
             // 
+            // cityInspector2
+            // 
+            cityInspector2.Location = new Point(1505, -4);
+            cityInspector2.Name = "cityInspector2";
+            cityInspector2.Size = new Size(396, 1291);
+            cityInspector2.TabIndex = 2;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1902, 1033);
-            Controls.Add(cityInspector1);
+            Controls.Add(cityInspector2);
             Controls.Add(endTurn);
             Name = "Form1";
             Text = "Form1";
@@ -67,5 +67,6 @@
         #endregion
         private CityInspector cityInspector1;
         private Button endTurn;
+        private CityInspector cityInspector2;
     }
 }

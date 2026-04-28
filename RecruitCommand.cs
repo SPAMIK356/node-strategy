@@ -11,18 +11,23 @@ namespace NodeStrategy
         public int UnitsCap;
         public float Exp;
         public float ExpCap;
-
+        public int Gold { get 
+            {
+                return (int)(Units * Exp + (UnitsCap + ExpCap * EconomyRules.expCapPriceFactor));
+            } }
 
     }
     public class RecruitCommand : Command, ITargetedCommand
     {
         public int subjectId { get; init; }
-        private ArmyTemplate template;
-        private Node targetNode;
+        private readonly ArmyTemplate template;
+        private readonly Node targetNode;
         private MilitaryComponent comp;
-        private Army armyToAdd;
-        public RecruitCommand(int executerId, Node targetNode, ArmyTemplate template) : base(executerId) 
+        private readonly Army armyToAdd;
+        private readonly Faction faction;
+        public RecruitCommand(int executerId, Node targetNode, ArmyTemplate template, Faction faction) : base(executerId) 
         {
+            this.faction = faction;
             this.targetNode = targetNode;
             this.template = template;
             subjectId = targetNode.id;
@@ -45,7 +50,7 @@ namespace NodeStrategy
         {
             comp = targetNode.GetComponent<MilitaryComponent>();
 
-            return comp != null && comp.CanAcceptArmy(armyToAdd) && !targetNode.isContested;
+            return comp != null && comp.CanAcceptArmy(armyToAdd) && !targetNode.isContested && faction.Gold > template.Gold;
         }
 
         public override void OnFinish()
@@ -56,6 +61,7 @@ namespace NodeStrategy
         public override void OnStart()
         {
             targetNode.AcceptArmy(armyToAdd);
+            faction.ModifyGold(-template.Gold);
 
             finishedExectuing = true;
         }

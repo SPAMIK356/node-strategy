@@ -18,15 +18,19 @@ namespace NodeStrategy
         {
             InitializeComponent();
         }
-
-        public void DisplayInfo(MapElement mapElement)
+        public void DisplayInfo(MapElement mapElement, Faction forFaction)
         {
             inspectedElement = mapElement;
             cityName.Text = mapElement.Name;
 
             description.Text = mapElement.GetDescription();
 
-            Enabled = true;
+            Visible = true;
+            if(forFaction.id != mapElement.controledBy)
+            {
+                recruitArmy.Enabled = false;
+                upgrade.Enabled = false;
+            }
 
             if (mapElement is Edge)
             {
