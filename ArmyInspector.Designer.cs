@@ -45,6 +45,7 @@
             moveOrder.TabIndex = 5;
             moveOrder.Text = "Пересунути армію";
             moveOrder.UseVisualStyleBackColor = true;
+            moveOrder.Click += moveOrder_Click;
             // 
             // description
             // 
