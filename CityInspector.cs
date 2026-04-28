@@ -28,11 +28,10 @@ namespace NodeStrategy
             Visible = true;
             if(forFaction.id != mapElement.controledBy)
             {
-                recruitArmy.Enabled = false;
-                upgrade.Enabled = false;
+                SetInteractiveElements(false);
             }
 
-            if (mapElement is Edge)
+            if (mapElement is Edge || forFaction.Gold < 150) //TODO: поміняти магічне число на щось нормальне, для мвп не критично
             {
                 recruitArmy.Enabled = false;
             }
@@ -44,7 +43,11 @@ namespace NodeStrategy
 
             Update();
         }
-
+        private void SetInteractiveElements(bool state)
+        {
+            recruitArmy.Enabled = state;
+            upgrade.Enabled = state;
+        }
         private void recruitArmy_Click(object sender, EventArgs e)
         {
             OnRecruitButtonClicked?.Invoke(inspectedElement as Node);
