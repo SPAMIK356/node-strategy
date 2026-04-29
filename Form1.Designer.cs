@@ -29,7 +29,8 @@
         private void InitializeComponent()
         {
             endTurn = new Button();
-            cityInspector2 = new CityInspector();
+            cityInspector = new CityInspector();
+            armyInspector = new ArmyInspector();
             SuspendLayout();
             // 
             // endTurn
@@ -44,19 +45,29 @@
             endTurn.UseVisualStyleBackColor = true;
             endTurn.Click += endTurn_Click;
             // 
-            // cityInspector2
+            // cityInspector
             // 
-            cityInspector2.Location = new Point(1505, -4);
-            cityInspector2.Name = "cityInspector2";
-            cityInspector2.Size = new Size(396, 1291);
-            cityInspector2.TabIndex = 2;
+            cityInspector.Location = new Point(1507, 1);
+            cityInspector.Name = "cityInspector";
+            cityInspector.Size = new Size(396, 1080);
+            cityInspector.TabIndex = 2;
+            cityInspector.Visible = false;
+            // 
+            // armyInspector
+            // 
+            armyInspector.Location = new Point(1507, 1);
+            armyInspector.Name = "armyInspector";
+            armyInspector.Size = new Size(396, 1080);
+            armyInspector.TabIndex = 3;
+            armyInspector.Visible = false;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1902, 1033);
-            Controls.Add(cityInspector2);
+            Controls.Add(armyInspector);
+            Controls.Add(cityInspector);
             Controls.Add(endTurn);
             Name = "Form1";
             Text = "Form1";
@@ -67,6 +78,7 @@
         #endregion
         private CityInspector cityInspector1;
         private Button endTurn;
-        private CityInspector cityInspector2;
+        private CityInspector cityInspector;
+        private ArmyInspector armyInspector;
     }
 }

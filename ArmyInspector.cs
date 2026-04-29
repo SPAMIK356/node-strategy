@@ -10,8 +10,8 @@ namespace NodeStrategy
 {
     public partial class ArmyInspector : UserControl
     {
-        Action<MapElement> OnLinkLabelClicked;
-        Action<Command> OnGiveOrderClicked;
+        public Action<MapElement> LinkLabelClicked;
+        public Action<Command> GiveOrderClicked;
         private MapElement armyPosition;
         private int factionId;
         private Army inspectedArmy;
@@ -23,6 +23,7 @@ namespace NodeStrategy
 
         public void DisplayInfo(Army army, Command? asociatedCommand, int perspective)
         {
+            Visible = true;
             factionId = perspective;
             armyPosition = army.currentPosition;
             inspectedArmy = army;
@@ -82,7 +83,7 @@ namespace NodeStrategy
         private void currentPosition_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Visible = false;
-            OnLinkLabelClicked?.Invoke(armyPosition);
+            LinkLabelClicked?.Invoke(armyPosition);
         }
 
         private void moveOrder_Click(object sender, EventArgs e)
@@ -92,7 +93,7 @@ namespace NodeStrategy
                 throw new ArgumentNullException("Неможливо віддати команду без вибраної вершини!");
             }
 
-            OnGiveOrderClicked?.Invoke(new MoveCommand(factionId, inspectedArmy, nodeSelection.SelectedItem as Node));
+            GiveOrderClicked?.Invoke(new MoveCommand(factionId, inspectedArmy, nodeSelection.SelectedItem as Node));
         }
     }
 }

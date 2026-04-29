@@ -108,7 +108,7 @@
             Controls.Add(description);
             Controls.Add(armyName);
             Name = "ArmyInspector";
-            Size = new Size(317, 1033);
+            Size = new Size(317, 1080);
             ResumeLayout(false);
             PerformLayout();
         }

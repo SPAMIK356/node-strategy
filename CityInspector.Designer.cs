@@ -84,7 +84,7 @@
             Controls.Add(description);
             Controls.Add(cityName);
             Name = "CityInspector";
-            Size = new Size(317, 1033);
+            Size = new Size(317, 1080);
             ResumeLayout(false);
             PerformLayout();
         }
