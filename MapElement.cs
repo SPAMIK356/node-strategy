@@ -24,7 +24,7 @@ namespace NodeStrategy
         }
         public string Name { get; protected set; }
         protected List<Component> components;
-        public int id;
+        public int id { get; protected set; }
         public virtual int controledBy { get; protected set; }
         public MapElement(string name, int id)
         {

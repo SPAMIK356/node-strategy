@@ -1,66 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Policy;
 using System.Text;
 
 namespace NodeStrategy
 {
     public class Army
     {
-        public int id { get; private set; }
-        public string name { get; private set; }
-        public int units { get; private set; }
-        public float exp { get; private set; }
-        public float expCap { get; private set; }
-        public int unitCap { get; private set; }
-        public float traverseProgress { get; private set; }
-        public int controledBy { get; private set; }
-        public MapElement currentPosition { get; private set; }
-        public bool isDead { get => units <= 0; }
+        public int Id { get; private set; }
+        public string Name { get; private set; }
+        public int Units { get; private set; }
+        public float Exp { get; private set; }
+        public float ExpCap { get; private set; }
+        public int UnitCap { get; private set; }
+        public int ControledBy { get; private set; }
+        public MapElement СurrentPosition { get; private set; }
+        public bool IsDead { get => Units <= 0; }
         public Army(int id, int units, float exp, float expCap,int unitCap, int controledBy, MapElement currentPosition, string name)
         {
-            this.id = id;
-            this.units = unitCap < units ? unitCap : units;
-            this.exp = exp;
-            this.unitCap = unitCap;
-            this.controledBy = controledBy;
-            this.expCap = expCap;
-            this.currentPosition = currentPosition;
-            this.name = name;
+            this.Id = id;
+            this.Units = unitCap < units ? unitCap : units;
+            this.Exp = exp;
+            this.UnitCap = unitCap;
+            this.ControledBy = controledBy;
+            this.ExpCap = expCap;
+            this.СurrentPosition = currentPosition;
+            this.Name = name;
         }
         public void Damage(int damage)
         {
-            units -= damage;
-            units = units < 0 ? 0 : units;
+            Units -= damage;
+            Units = Units < 0 ? 0 : Units;
         }
         public int AddUnits(int amount, float expLevel) 
         { 
-            int unitsLeft = (units+amount)-unitCap;
+            int unitsLeft = (Units+amount)-UnitCap;
 
             unitsLeft = unitsLeft < 0 ? 0 : unitsLeft;
 
             int unitsToAdd = amount - unitsLeft;
 
-            exp = (units * exp + unitsToAdd * expLevel) / units + unitsToAdd;
+            Exp = (Units * Exp + unitsToAdd * expLevel) / Units + unitsToAdd;
 
-            units += unitsToAdd;
+            Units += unitsToAdd;
 
             return unitsLeft;
         }
 
-        public void AddTraverseProgress(float amount)
-        {
-            traverseProgress += amount;
-        }
-
-        public void ResetTraverseProgress()
-        {
-            traverseProgress = 0;
-        }
-
         public void ChangePosition(MapElement newPosition)
         {
-            currentPosition = newPosition;
+            СurrentPosition = newPosition;
         }
     }
 }

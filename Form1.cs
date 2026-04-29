@@ -31,7 +31,18 @@ namespace NodeStrategy
 
 
         }
+        private void TableSetup()
+        {
+            mapTable.DataSource = manager.mapElements.Values;
+            mapTable.Columns["id"]?.Visible = false;
+            mapTable.Columns["isContested"]?.Visible = false;
+            mapTable.Columns["controledBy"]?.HeaderText = "Під контролем";
+            mapTable.Columns["Name"]?.HeaderText = "Назва";
+            mapTable.Columns["GoldGain"]?.HeaderText = "Дохід золота";
 
+            armiesTable.Columns["Id"]?.Visible = false;
+            armiesTable.Columns["Name"]?.HeaderText = "Назва";
+        }
         private void OnRecruitClick(Node node)
         {
             manager.AddCommand(new RecruitCommand(manager.currentFaction.id, node, template, manager.currentFaction));

@@ -6,7 +6,7 @@ namespace NodeStrategy
 {
     public class MoveCommand : Command, ITargetedCommand
     {
-        public int subjectId { get => army.id; }
+        public int subjectId { get => army.Id; }
 
         public override string description { get; protected set; }
 
@@ -17,15 +17,15 @@ namespace NodeStrategy
         public override string Name { get; protected set; }
         public MoveCommand(int executerId, Army army, Node target) : base(executerId)
         {
-            Name = $"Переміщення {army.name} до {target.Name}";
+            Name = $"Переміщення {army.Name} до {target.Name}";
             this.army = army;
             this.targetElement = target;
 
-            description = $"{army.name} переміщується до {targetElement.Name}";
+            description = $"{army.Name} переміщується до {targetElement.Name}";
         }
         public override void Execute()
         {
-            Edge currentPos = army.currentPosition as Edge;
+            Edge currentPos = army.СurrentPosition as Edge;
 
             progress += currentPos.traverseCost;
 
@@ -40,7 +40,7 @@ namespace NodeStrategy
 
         public override void OnStart()
         {
-            Node sourceNode = army.currentPosition as Node;
+            Node sourceNode = army.СurrentPosition as Node;
 
 
             Edge? edge = sourceNode.GetConnection(targetElement);
@@ -61,7 +61,7 @@ namespace NodeStrategy
 
         public override void OnFinish()
         {
-            army.currentPosition.TryRemoveArmy(army);
+            army.СurrentPosition.TryRemoveArmy(army);
 
             targetElement.AcceptArmy(army);
             army.ChangePosition(targetElement);

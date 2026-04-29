@@ -66,7 +66,7 @@ namespace NodeStrategy
             ClearDefeatedArmies();
             if(defenders.Count == 0 && attackers.Count > 0 && parent is Node node)
             {
-                node.SetControl(attackers[0].controledBy);
+                node.SetControl(attackers[0].ControledBy);
                 defenders.AddRange(attackers);
                 attackers.Clear();
             }
@@ -81,20 +81,20 @@ namespace NodeStrategy
         }
         protected int GetTotalUnits(List<Army> armies)
         {
-            return armies.Sum(x => x.units);
+            return armies.Sum(x => x.Units);
         }
 
         protected float GetAverageXP(List<Army> armies)
         {
-            return armies.Sum(x => x.units*x.exp)/GetTotalUnits(armies);
+            return armies.Sum(x => x.Units*x.Exp)/GetTotalUnits(armies);
         }
         protected float GetAverageXP(List<Army> armies, int totalUnits)
         {
-            return armies.Sum(x => x.units * x.exp) / totalUnits;
+            return armies.Sum(x => x.Units * x.Exp) / totalUnits;
         }
         public bool TryAddArmy(Army army)
         {
-            if(army.controledBy == parent.controledBy)
+            if(army.ControledBy == parent.controledBy)
             {
                 if(!DefendersFull)
                 {
@@ -109,7 +109,7 @@ namespace NodeStrategy
             }
             else if (!AttackersFull)
             {
-                if(attackers.Count == 0 || attackers[0].controledBy == army.controledBy)
+                if(attackers.Count == 0 || attackers[0].ControledBy == army.ControledBy)
                 {
                     attackers.Add(army);
                     return true;
@@ -120,7 +120,7 @@ namespace NodeStrategy
         }
         public bool CanAcceptArmy(Army army)
         {
-            if(army.controledBy == parent.controledBy)
+            if(army.ControledBy == parent.controledBy)
             {
                 if(defenders.Count >= armyCap)
                     return false;
@@ -143,12 +143,12 @@ namespace NodeStrategy
         }
         public void ClearDefeatedArmies()
         {
-            defenders.RemoveAll(x => x.isDead);
-            attackers.RemoveAll(x => x.isDead);
+            defenders.RemoveAll(x => x.IsDead);
+            attackers.RemoveAll(x => x.IsDead);
         }
         private string GetArmyInfo(Army army)
         {
-            return $"{army.name}, {army.units} юнітів, {army.exp} досвіду";
+            return $"{army.Name}, {army.Units} юнітів, {army.Exp} досвіду";
         }
         
         public override string GetDescription()

@@ -25,19 +25,19 @@ namespace NodeStrategy
         {
             Visible = true;
             factionId = perspective;
-            armyPosition = army.currentPosition;
+            armyPosition = army.СurrentPosition;
             inspectedArmy = army;
 
-            armyName.Text = army.name;
+            armyName.Text = army.Name;
 
-            if (perspective != army.controledBy) SetInteractiveElements(false);
+            if (perspective != army.ControledBy) SetInteractiveElements(false);
             else SetInteractiveElements(true);
 
-            string description = $"контролюються фракцією {army.controledBy}" +
-                $"Юніти: {army.units}/{army.unitCap}\n" +
-                $"Рівень досвіду: {army.exp}/{army.expCap}\n";
-            if (army.controledBy != perspective) SetInteractiveElements(false);
-            if (army.currentPosition is Node node)
+            string description = $"контролюються фракцією {army.ControledBy}" +
+                $"Юніти: {army.Units}/{army.UnitCap}\n" +
+                $"Рівень досвіду: {army.Exp}/{army.ExpCap}\n";
+            if (army.ControledBy != perspective) SetInteractiveElements(false);
+            if (army.СurrentPosition is Node node)
             {
                 if (node.isContested)
                 {
@@ -59,7 +59,7 @@ namespace NodeStrategy
                     }
                 }
             }
-            else if (army.currentPosition is Edge edge)
+            else if (army.СurrentPosition is Edge edge)
             {
                 if (asociatedCommand == null)
                 {
