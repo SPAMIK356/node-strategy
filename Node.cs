@@ -3,6 +3,16 @@
     public class Node : MapElement
     {
 
+        public override int GoldGain { get {
+                var economyComponent = components.OfType<EconomyComponent>().FirstOrDefault();
+
+                if (economyComponent != null)
+                {
+                    return economyComponent.GoldPerTurn;
+                }
+                return base.GoldGain;
+            } 
+        }
         public override int controledBy { get => base.controledBy; protected set => base.controledBy = value; }
         List<Edge> edges = new List<Edge>();
 

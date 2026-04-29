@@ -9,6 +9,8 @@ namespace NodeStrategy
     {
         int goldPerTurn;
 
+        public int GoldPerTurn => goldPerTurn;
+
         public EconomyComponent(int goldPerTurn)
         {
             this.goldPerTurn = goldPerTurn;

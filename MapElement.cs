@@ -6,6 +6,7 @@ namespace NodeStrategy
 {
     public abstract class MapElement
     {
+        public virtual int GoldGain { get => 0; }
         public abstract bool isContested { get; }
         public virtual bool AddComponent(Component component)
         {

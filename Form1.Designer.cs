@@ -31,6 +31,16 @@
             endTurn = new Button();
             cityInspector = new CityInspector();
             armyInspector = new ArmyInspector();
+            tabControl1 = new TabControl();
+            mapTab = new TabPage();
+            armiesTab = new TabPage();
+            mapTable = new DataGridView();
+            armiesTable = new DataGridView();
+            tabControl1.SuspendLayout();
+            mapTab.SuspendLayout();
+            armiesTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)mapTable).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)armiesTable).BeginInit();
             SuspendLayout();
             // 
             // endTurn
@@ -61,17 +71,78 @@
             armyInspector.TabIndex = 3;
             armyInspector.Visible = false;
             // 
+            // tabControl1
+            // 
+            tabControl1.Controls.Add(mapTab);
+            tabControl1.Controls.Add(armiesTab);
+            tabControl1.Location = new Point(587, 1);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new Size(914, 667);
+            tabControl1.TabIndex = 4;
+            // 
+            // mapTab
+            // 
+            mapTab.Controls.Add(mapTable);
+            mapTab.Location = new Point(4, 29);
+            mapTab.Name = "mapTab";
+            mapTab.Padding = new Padding(3);
+            mapTab.Size = new Size(906, 634);
+            mapTab.TabIndex = 0;
+            mapTab.Text = "Мапа";
+            mapTab.UseVisualStyleBackColor = true;
+            // 
+            // armiesTab
+            // 
+            armiesTab.Controls.Add(armiesTable);
+            armiesTab.Location = new Point(4, 29);
+            armiesTab.Name = "armiesTab";
+            armiesTab.Padding = new Padding(3);
+            armiesTab.Size = new Size(906, 634);
+            armiesTab.TabIndex = 1;
+            armiesTab.Text = "Армії";
+            armiesTab.UseVisualStyleBackColor = true;
+            // 
+            // mapTable
+            // 
+            mapTable.AllowUserToAddRows = false;
+            mapTable.AllowUserToDeleteRows = false;
+            mapTable.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            mapTable.Dock = DockStyle.Fill;
+            mapTable.Location = new Point(3, 3);
+            mapTable.Name = "mapTable";
+            mapTable.ReadOnly = true;
+            mapTable.RowHeadersWidth = 51;
+            mapTable.Size = new Size(900, 628);
+            mapTable.TabIndex = 0;
+            // 
+            // armiesTable
+            // 
+            armiesTable.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            armiesTable.Dock = DockStyle.Fill;
+            armiesTable.Location = new Point(3, 3);
+            armiesTable.Name = "armiesTable";
+            armiesTable.RowHeadersWidth = 51;
+            armiesTable.Size = new Size(900, 628);
+            armiesTable.TabIndex = 0;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1902, 1033);
+            Controls.Add(tabControl1);
             Controls.Add(armyInspector);
             Controls.Add(cityInspector);
             Controls.Add(endTurn);
             Name = "Form1";
             Text = "Form1";
             WindowState = FormWindowState.Maximized;
+            tabControl1.ResumeLayout(false);
+            mapTab.ResumeLayout(false);
+            armiesTab.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)mapTable).EndInit();
+            ((System.ComponentModel.ISupportInitialize)armiesTable).EndInit();
             ResumeLayout(false);
         }
 
@@ -80,5 +151,10 @@
         private Button endTurn;
         private CityInspector cityInspector;
         private ArmyInspector armyInspector;
+        private TabControl tabControl1;
+        private TabPage mapTab;
+        private TabPage armiesTab;
+        private DataGridView mapTable;
+        private DataGridView armiesTable;
     }
 }
