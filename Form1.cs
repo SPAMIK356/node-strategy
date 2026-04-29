@@ -42,6 +42,16 @@ namespace NodeStrategy
 
             armiesTable.Columns["Id"]?.Visible = false;
             armiesTable.Columns["Name"]?.HeaderText = "Назва";
+            armiesTable.Columns["Units"]?.HeaderText = "Кількість";
+            armiesTable.Columns["UnitCap"]?.HeaderText = "Макс. юнітів";
+            armiesTable.Columns["Exp"]?.HeaderText = "Досвід";
+            armiesTable.Columns["ExpCap"]?.HeaderText = "Макс. досвід";
+            armiesTable.Columns["ControledBy"]?.HeaderText = "Під контролем";
+            armiesTable.Columns["CurrentPosition"]?.Visible = false;
+            armiesTable.Columns["CurrentPositionName"]?.Name = "Позиція";
+            armiesTable.Columns["IsDead"]?.Visible = false;
+
+
         }
         private void OnRecruitClick(Node node)
         {

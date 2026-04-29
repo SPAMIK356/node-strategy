@@ -25,7 +25,7 @@ namespace NodeStrategy
         }
         public override void Execute()
         {
-            Edge currentPos = army.СurrentPosition as Edge;
+            Edge currentPos = army.CurrentPosition as Edge;
 
             progress += currentPos.traverseCost;
 
@@ -40,7 +40,7 @@ namespace NodeStrategy
 
         public override void OnStart()
         {
-            Node sourceNode = army.СurrentPosition as Node;
+            Node sourceNode = army.CurrentPosition as Node;
 
 
             Edge? edge = sourceNode.GetConnection(targetElement);
@@ -61,7 +61,7 @@ namespace NodeStrategy
 
         public override void OnFinish()
         {
-            army.СurrentPosition.TryRemoveArmy(army);
+            army.CurrentPosition.TryRemoveArmy(army);
 
             targetElement.AcceptArmy(army);
             army.ChangePosition(targetElement);

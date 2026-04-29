@@ -13,7 +13,8 @@ namespace NodeStrategy
         public float ExpCap { get; private set; }
         public int UnitCap { get; private set; }
         public int ControledBy { get; private set; }
-        public MapElement СurrentPosition { get; private set; }
+        public MapElement CurrentPosition { get; private set; }
+        public string CurrentPositionName { get => CurrentPosition.Name;  }
         public bool IsDead { get => Units <= 0; }
         public Army(int id, int units, float exp, float expCap,int unitCap, int controledBy, MapElement currentPosition, string name)
         {
@@ -23,7 +24,7 @@ namespace NodeStrategy
             this.UnitCap = unitCap;
             this.ControledBy = controledBy;
             this.ExpCap = expCap;
-            this.СurrentPosition = currentPosition;
+            this.CurrentPosition = currentPosition;
             this.Name = name;
         }
         public void Damage(int damage)
@@ -48,7 +49,7 @@ namespace NodeStrategy
 
         public void ChangePosition(MapElement newPosition)
         {
-            СurrentPosition = newPosition;
+            CurrentPosition = newPosition;
         }
     }
 }
