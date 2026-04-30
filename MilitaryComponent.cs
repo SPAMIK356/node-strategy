@@ -190,5 +190,12 @@ namespace NodeStrategy
                 $"{attackersDescription}\n";
 
         }
+
+        public List<Army> GetArmies()
+        {
+ 
+
+            return defenders.Concat(attackers).ToList();
+        }
     }
 }

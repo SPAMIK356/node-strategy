@@ -30,7 +30,10 @@ namespace NodeStrategy
             {
                 SetInteractiveElements(false);
             }
-
+            else
+            {
+                SetInteractiveElements(true);
+            }
             if (mapElement is Edge || forFaction.Gold < 150) //TODO: поміняти магічне число на щось нормальне, для мвп не критично
             {
                 recruitArmy.Enabled = false;

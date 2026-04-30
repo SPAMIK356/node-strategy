@@ -10,10 +10,11 @@ namespace NodeStrategy
         {
             manager.factions.Add(0, new Faction(IDReg.NextID));
             manager.turnOrder.Add(0);
+            manager.factions[0].ModifyGold(1000);
             InitializeComponent();
-            node = new Node("Арциз", 0, 0);
+            node = new Node("Арциз", IDReg.NextID, 0);
             node.AddComponent(new MilitaryComponent(10, 1));
-
+            manager.mapElements.Add(node.id, node);
             template = new ArmyTemplate()
             {
                 Name = "Лісові тварюки",
@@ -22,24 +23,55 @@ namespace NodeStrategy
                 Units = 100,
                 UnitsCap = 100
             };
-            cityInspector.OnRecruitButtonClicked += OnRecruitClick;
+            cityInspector.OnRecruitButtonClicked += node =>
+            {
+                manager.AddCommand(new RecruitCommand(manager.currentFaction.id, node, template, manager.currentFaction));
+            };
 
-            armyInspector.LinkLabelClicked += OnLinkLabelClicked;
-            armyInspector.GiveOrderClicked += OnMoveOrderClicked;
+            armyInspector.LinkLabelClicked += element =>
+            {
+                try
+                {
+                    cityInspector.DisplayInfo(element, manager.currentFaction);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Помилка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            };
+            armyInspector.GiveOrderClicked += command => { manager.AddCommand(command); };
 
             cityInspector.DisplayInfo(node, manager.currentFaction);
 
-
+            TableSetup();
+            mapTable.Update();
+            armiesTable.Update();
         }
         private void TableSetup()
         {
-            mapTable.DataSource = manager.mapElements.Values;
+            MapElementsTabUpdate();
+
+
+            ArmiesTabUpdate();
+
+        }
+        private void MapElementsTabUpdate()
+        {
+            mapTable.DataSource = null;
+
+            mapTable.DataSource = manager.mapElements.Values.ToList();
             mapTable.Columns["id"]?.Visible = false;
             mapTable.Columns["isContested"]?.Visible = false;
             mapTable.Columns["controledBy"]?.HeaderText = "Під контролем";
             mapTable.Columns["Name"]?.HeaderText = "Назва";
             mapTable.Columns["GoldGain"]?.HeaderText = "Дохід золота";
+        }
 
+        private void ArmiesTabUpdate()
+        {
+            armiesTable.DataSource = null;
+
+            armiesTable.DataSource = manager.GetAllArmies();
             armiesTable.Columns["Id"]?.Visible = false;
             armiesTable.Columns["Name"]?.HeaderText = "Назва";
             armiesTable.Columns["Units"]?.HeaderText = "Кількість";
@@ -48,29 +80,21 @@ namespace NodeStrategy
             armiesTable.Columns["ExpCap"]?.HeaderText = "Макс. досвід";
             armiesTable.Columns["ControledBy"]?.HeaderText = "Під контролем";
             armiesTable.Columns["CurrentPosition"]?.Visible = false;
-            armiesTable.Columns["CurrentPositionName"]?.Name = "Позиція";
+            armiesTable.Columns["CurrentPositionName"]?.HeaderText = "Позиція";
             armiesTable.Columns["IsDead"]?.Visible = false;
-
-
         }
-        private void OnRecruitClick(Node node)
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            manager.AddCommand(new RecruitCommand(manager.currentFaction.id, node, template, manager.currentFaction));
-        }
-        private void OnLinkLabelClicked(MapElement element)
-        {
-            try
+            switch (tabControl1.SelectedIndex)
             {
-                cityInspector.DisplayInfo(element, manager.currentFaction);
+                case 0:
+                    MapElementsTabUpdate();
+                    break;
+
+                case 1:
+                    ArmiesTabUpdate();
+                    break;
             }
-            catch (Exception ex) 
-            { 
-                MessageBox.Show(ex.Message,"Помилка!",MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-        private void OnMoveOrderClicked(Command command)
-        {
-            manager.AddCommand(command);
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -82,6 +106,12 @@ namespace NodeStrategy
             manager.EndTurn();
             cityInspector.DisplayInfo(node, manager.currentFaction);
             Update();
+        }
+
+        private void FullUpdate()
+        {
+            MapElementsTabUpdate();
+            ArmiesTabUpdate();
         }
     }
 }

@@ -26,6 +26,24 @@ namespace NodeStrategy
         {
             GameEvents.OnGoldAdd -= GenerateGold;
         }
+        public List<Army> GetAllArmies()
+        {
+
+
+            return mapElements.Values.
+                OfType<Edge>().
+                SelectMany(x => x.armies).
+                Concat(
+                mapElements.Values
+                .OfType<Node>()
+                .Select(x => x.GetComponent<MilitaryComponent>()).
+                Where(x => x != null)
+                .SelectMany(x =>
+                {              
+                    return x.GetArmies();
+                }))
+                .ToList();
+        }
         public void EndTurn()
         {
             activeCommands.RemoveAll(x => !x.IsValid());

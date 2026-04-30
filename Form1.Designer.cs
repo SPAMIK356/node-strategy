@@ -33,13 +33,13 @@
             armyInspector = new ArmyInspector();
             tabControl1 = new TabControl();
             mapTab = new TabPage();
-            armiesTab = new TabPage();
             mapTable = new DataGridView();
+            armiesTab = new TabPage();
             armiesTable = new DataGridView();
             tabControl1.SuspendLayout();
             mapTab.SuspendLayout();
-            armiesTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)mapTable).BeginInit();
+            armiesTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)armiesTable).BeginInit();
             SuspendLayout();
             // 
@@ -80,6 +80,7 @@
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(914, 667);
             tabControl1.TabIndex = 4;
+            tabControl1.SelectedIndexChanged += tabControl1_SelectedIndexChanged;
             // 
             // mapTab
             // 
@@ -91,17 +92,6 @@
             mapTab.TabIndex = 0;
             mapTab.Text = "Мапа";
             mapTab.UseVisualStyleBackColor = true;
-            // 
-            // armiesTab
-            // 
-            armiesTab.Controls.Add(armiesTable);
-            armiesTab.Location = new Point(4, 29);
-            armiesTab.Name = "armiesTab";
-            armiesTab.Padding = new Padding(3);
-            armiesTab.Size = new Size(906, 634);
-            armiesTab.TabIndex = 1;
-            armiesTab.Text = "Армії";
-            armiesTab.UseVisualStyleBackColor = true;
             // 
             // mapTable
             // 
@@ -115,6 +105,17 @@
             mapTable.RowHeadersWidth = 51;
             mapTable.Size = new Size(900, 628);
             mapTable.TabIndex = 0;
+            // 
+            // armiesTab
+            // 
+            armiesTab.Controls.Add(armiesTable);
+            armiesTab.Location = new Point(4, 29);
+            armiesTab.Name = "armiesTab";
+            armiesTab.Padding = new Padding(3);
+            armiesTab.Size = new Size(906, 634);
+            armiesTab.TabIndex = 1;
+            armiesTab.Text = "Армії";
+            armiesTab.UseVisualStyleBackColor = true;
             // 
             // armiesTable
             // 
@@ -140,8 +141,8 @@
             WindowState = FormWindowState.Maximized;
             tabControl1.ResumeLayout(false);
             mapTab.ResumeLayout(false);
-            armiesTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)mapTable).EndInit();
+            armiesTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)armiesTable).EndInit();
             ResumeLayout(false);
         }
