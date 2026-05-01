@@ -9,9 +9,10 @@ namespace NodeStrategy
         public List<int> turnOrder = new List<int>();
         public Dictionary<int, Faction> factions = new Dictionary<int, Faction>();
         public Dictionary<int, MapElement> mapElements = new Dictionary<int, MapElement>();
-        public Faction currentFaction { get => factions[turnOrder[currentTurnIndex]]; }
+        public Faction CurrentFaction { get => factions[turnOrder[currentTurnIndex]]; }
         private int currentTurnIndex = 0;
-
+        public int CurrentTurn { get; private set; } = 1;
+        public Action TurnEnd;
         
 
         public List<Command> plannedCommands = new List<Command>();
@@ -73,6 +74,9 @@ namespace NodeStrategy
             }
 
             currentTurnIndex = (currentTurnIndex + 1) % turnOrder.Count;
+            CurrentTurn++;
+
+            TurnEnd?.Invoke();
         }
         public void AddCommand(Command command)
         {
@@ -93,6 +97,19 @@ namespace NodeStrategy
         public void GenerateGold(int factionId, int amount)
         {
             factions[factionId].ModifyGold(amount);
+        }
+        public int GetGoldPerTurn(int factionId)
+        {
+
+            return mapElements.OfType<Node>()
+                .Select(x => x.GetComponent<EconomyComponent>())
+                .Where(x => x != null)
+                .Sum(x => x.GoldPerTurn);
+            
+        }
+        public int GetGoldPerTurn(Faction faction)
+        {
+            return GetGoldPerTurn(faction.id);
         }
     }
 }

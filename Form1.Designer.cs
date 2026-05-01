@@ -103,8 +103,10 @@
             mapTable.Name = "mapTable";
             mapTable.ReadOnly = true;
             mapTable.RowHeadersWidth = 51;
+            mapTable.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             mapTable.Size = new Size(900, 628);
             mapTable.TabIndex = 0;
+            mapTable.SelectionChanged += mapTable_SelectionChanged;
             // 
             // armiesTab
             // 
@@ -124,8 +126,10 @@
             armiesTable.Location = new Point(3, 3);
             armiesTable.Name = "armiesTable";
             armiesTable.RowHeadersWidth = 51;
+            armiesTable.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             armiesTable.Size = new Size(900, 628);
             armiesTable.TabIndex = 0;
+            armiesTable.SelectionChanged += armiesTable_SelectionChanged;
             // 
             // Form1
             // 

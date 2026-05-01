@@ -71,7 +71,9 @@ namespace NodeStrategy
                 description += asociatedCommand.description;
             }
 
+            this.description.Text = description;
 
+            currentPosition.Text = army.CurrentPositionName;
         }
 
         private void SetInteractiveElements(bool state)

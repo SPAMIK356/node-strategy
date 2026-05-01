@@ -8,6 +8,7 @@ namespace NodeStrategy
         ArmyTemplate template;
         public Form1()
         {
+
             manager.factions.Add(0, new Faction(IDReg.NextID));
             manager.turnOrder.Add(0);
             manager.factions[0].ModifyGold(1000);
@@ -25,14 +26,17 @@ namespace NodeStrategy
             };
             cityInspector.OnRecruitButtonClicked += node =>
             {
-                manager.AddCommand(new RecruitCommand(manager.currentFaction.id, node, template, manager.currentFaction));
+                manager.AddCommand(new RecruitCommand(manager.CurrentFaction.id, node, template, manager.CurrentFaction));
             };
+
+            manager.TurnEnd += FullUpdate;
 
             armyInspector.LinkLabelClicked += element =>
             {
                 try
                 {
-                    cityInspector.DisplayInfo(element, manager.currentFaction);
+                    cityInspector.DisplayInfo(element, manager.CurrentFaction);
+                    tabControl1.SelectedIndex = 0;
                 }
                 catch (Exception ex)
                 {
@@ -41,11 +45,16 @@ namespace NodeStrategy
             };
             armyInspector.GiveOrderClicked += command => { manager.AddCommand(command); };
 
-            cityInspector.DisplayInfo(node, manager.currentFaction);
+            cityInspector.DisplayInfo(node, manager.CurrentFaction);
 
-            TableSetup();
-            mapTable.Update();
-            armiesTable.Update();
+
+
+            FullUpdate();
+        }
+        private void HeaderTextUpdate()
+        {
+            int gpt = manager.GetGoldPerTurn(manager.CurrentFaction);
+            Text = $"Фракція {manager.CurrentFaction} | {manager.CurrentFaction.Gold} золота ({(gpt > 0 ? $"+{gpt}" : gpt)} за хід)";
         }
         private void TableSetup()
         {
@@ -89,10 +98,16 @@ namespace NodeStrategy
             {
                 case 0:
                     MapElementsTabUpdate();
+                    cityInspector.Visible = mapTable.Rows.Count > 0 ? true : false;
+                    armyInspector.Visible = false;
                     break;
 
                 case 1:
                     ArmiesTabUpdate();
+                    cityInspector.Visible = false;
+
+                    armyInspector.Visible = armiesTable.Rows.Count > 0 ? true : false;
+
                     break;
             }
         }
@@ -104,7 +119,7 @@ namespace NodeStrategy
         private void endTurn_Click(object sender, EventArgs e)
         {
             manager.EndTurn();
-            cityInspector.DisplayInfo(node, manager.currentFaction);
+            cityInspector.DisplayInfo(node, manager.CurrentFaction);
             Update();
         }
 
@@ -112,6 +127,39 @@ namespace NodeStrategy
         {
             MapElementsTabUpdate();
             ArmiesTabUpdate();
+            HeaderTextUpdate();
+        }
+
+        private void mapTable_SelectionChanged(object sender, EventArgs e)
+        {
+            if (mapTable.SelectedRows.Count > 0)
+            {
+                var selectedRow = mapTable.SelectedRows[0];
+
+                var element = selectedRow.DataBoundItem as MapElement;
+
+                cityInspector.DisplayInfo(element, manager.CurrentFaction);
+            }
+        }
+
+        private void armiesTable_SelectionChanged(object sender, EventArgs e)
+        {
+            if (armiesTable.SelectedRows.Count > 0)
+            {
+                var selectedRow = armiesTable.SelectedRows[0];
+
+                var element = selectedRow.DataBoundItem as Army;
+
+                armyInspector.DisplayInfo(element, manager.activeCommands
+                    .OfType<ITargetedCommand>()
+                    .Where(x => x.subjectId == element.Id)
+                    .FirstOrDefault() as Command
+                    , manager.CurrentFaction.id);
+            }
+            else
+            {
+                armyInspector.Visible = false;
+            }
         }
     }
 }
