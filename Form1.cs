@@ -8,14 +8,25 @@ namespace NodeStrategy
         ArmyTemplate template;
         public Form1()
         {
+            InitializeComponent();
 
-            manager.factions.Add(0, new Faction(IDReg.NextID));
+            /*manager.factions.Add(0, new Faction(IDReg.NextID));
             manager.turnOrder.Add(0);
             manager.factions[0].ModifyGold(1000);
             InitializeComponent();
             node = new Node("Арциз", IDReg.NextID, 0);
             node.AddComponent(new MilitaryComponent(10, 1));
-            manager.mapElements.Add(node.id, node);
+            node.AddComponent(new EconomyComponent(-100));
+            manager.mapElements.Add(node.id, node);*/
+
+            manager.factions.Add(0, new Faction(IDReg.NextID));
+
+            manager.factions.Add(1, new Faction(IDReg.NextID));
+            manager.factions.Add(2, new Faction(IDReg.NextID));
+
+            manager.turnOrder.Add(1);
+            manager.turnOrder.Add(2);
+
             template = new ArmyTemplate()
             {
                 Name = "Лісові тварюки",
@@ -45,8 +56,7 @@ namespace NodeStrategy
             };
             armyInspector.GiveOrderClicked += command => { manager.AddCommand(command); };
 
-            cityInspector.DisplayInfo(node, manager.CurrentFaction);
-
+            MapGenerator.GenerateMap(manager, 20, pictureBox1.Width, pictureBox1.Height, new List<int> { 1, 2 });
 
 
             FullUpdate();
@@ -54,16 +64,9 @@ namespace NodeStrategy
         private void HeaderTextUpdate()
         {
             int gpt = manager.GetGoldPerTurn(manager.CurrentFaction);
-            Text = $"Фракція {manager.CurrentFaction} | {manager.CurrentFaction.Gold} золота ({(gpt > 0 ? $"+{gpt}" : gpt)} за хід)";
+            Text = $"Фракція {manager.CurrentFaction.id} | {manager.CurrentFaction.Gold} золота ({(gpt > 0 ? $"+{gpt}" : gpt)} за хід)";
         }
-        private void TableSetup()
-        {
-            MapElementsTabUpdate();
 
-
-            ArmiesTabUpdate();
-
-        }
         private void MapElementsTabUpdate()
         {
             mapTable.DataSource = null;
@@ -119,7 +122,6 @@ namespace NodeStrategy
         private void endTurn_Click(object sender, EventArgs e)
         {
             manager.EndTurn();
-            cityInspector.DisplayInfo(node, manager.CurrentFaction);
             Update();
         }
 
@@ -128,6 +130,8 @@ namespace NodeStrategy
             MapElementsTabUpdate();
             ArmiesTabUpdate();
             HeaderTextUpdate();
+            pictureBox1.Invalidate();
+
         }
 
         private void mapTable_SelectionChanged(object sender, EventArgs e)
@@ -160,6 +164,16 @@ namespace NodeStrategy
             {
                 armyInspector.Visible = false;
             }
+        }
+
+        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        {
+            MapRenderer.DrawMap(e.Graphics, manager, pictureBox1.Width, pictureBox1.Height);
+        }
+
+        private void додатиІменаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

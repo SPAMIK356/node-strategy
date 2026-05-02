@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NodeStrategy
 {
-    class TurnManager
+    public class TurnManager
     {
         public List<int> turnOrder = new List<int>();
         public Dictionary<int, Faction> factions = new Dictionary<int, Faction>();
@@ -101,9 +101,9 @@ namespace NodeStrategy
         public int GetGoldPerTurn(int factionId)
         {
 
-            return mapElements.OfType<Node>()
+            return mapElements.Values.OfType<Node>()
                 .Select(x => x.GetComponent<EconomyComponent>())
-                .Where(x => x != null)
+                .Where(x => x != null && x.parent.controledBy == factionId)
                 .Sum(x => x.GoldPerTurn);
             
         }

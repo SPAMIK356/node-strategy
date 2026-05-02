@@ -6,9 +6,9 @@ namespace NodeStrategy
 {
     public static class CombatRules
     {
-
-        public static float combatLethality { get; private set; } = 0.15f;
-        public static float expWeight { get; private set; } = 0.5f;
+        public static float ExpPerDefeatedUnit = 0.01f;
+        public static float CombatLethality { get;} = 0.15f;
+        public static float ExpWeight { get; } = 0.5f;
 
     }
 }

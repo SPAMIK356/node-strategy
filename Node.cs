@@ -2,7 +2,8 @@
 {
     public class Node : MapElement
     {
-
+        public int X { get; init; }
+        public int Y { get; init; }
         public override int GoldGain { get {
                 var economyComponent = components.OfType<EconomyComponent>().FirstOrDefault();
 

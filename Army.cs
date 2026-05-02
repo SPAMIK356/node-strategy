@@ -46,7 +46,10 @@ namespace NodeStrategy
 
             return unitsLeft;
         }
-
+        public void ModifyExp(float amount)
+        {
+            Exp = Math.Clamp(Exp + amount, 0, ExpCap);
+        }
         public void ChangePosition(MapElement newPosition)
         {
             CurrentPosition = newPosition;

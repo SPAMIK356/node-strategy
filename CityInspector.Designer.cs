@@ -64,6 +64,7 @@
             upgrade.TabIndex = 2;
             upgrade.Text = "Покращити";
             upgrade.UseVisualStyleBackColor = true;
+            upgrade.Visible = false;
             // 
             // recruitArmy
             // 
@@ -71,7 +72,7 @@
             recruitArmy.Name = "recruitArmy";
             recruitArmy.Size = new Size(281, 41);
             recruitArmy.TabIndex = 3;
-            recruitArmy.Text = "Найняти армію";
+            recruitArmy.Text = "Найняти армію (201 з.)";
             recruitArmy.UseVisualStyleBackColor = true;
             recruitArmy.Click += recruitArmy_Click;
             // 

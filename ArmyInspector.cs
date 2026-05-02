@@ -33,7 +33,7 @@ namespace NodeStrategy
             if (perspective != army.ControledBy) SetInteractiveElements(false);
             else SetInteractiveElements(true);
 
-            string description = $"контролюються фракцією {army.ControledBy}" +
+            string description = $"Контролюються фракцією {army.ControledBy}\n" +
                 $"Юніти: {army.Units}/{army.UnitCap}\n" +
                 $"Рівень досвіду: {army.Exp}/{army.ExpCap}\n";
             if (army.ControledBy != perspective) SetInteractiveElements(false);

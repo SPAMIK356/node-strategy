@@ -22,7 +22,7 @@ namespace NodeStrategy
             { 
                 get 
                 {
-                    return Convert.ToInt32((float)unitAmount * exp * CombatRules.combatLethality*(1+CombatRules.expWeight));
+                    return Convert.ToInt32((float)unitAmount * exp * CombatRules.CombatLethality*(1+CombatRules.ExpWeight));
                 } 
             }
             public ArmyStats(int unitAmount, float exp, ArmyState state)
@@ -70,6 +70,13 @@ namespace NodeStrategy
                 defenders.AddRange(attackers);
                 attackers.Clear();
             }
+            AddExp(defenders, attackersStats.unitAmount - GetTotalUnits(attackers));
+            AddExp(attackers, defendersStats.unitAmount - GetTotalUnits(defenders));
+
+        }
+        protected void AddExp(List<Army> armyGroup, int defeatedUnits)
+        {
+            armyGroup.ForEach(army => army.ModifyExp(defeatedUnits * CombatRules.ExpPerDefeatedUnit));
         }
         protected void DamageArmyGroup(List<Army> armies, ArmyStats defStats, int damage)
         {
@@ -185,7 +192,8 @@ namespace NodeStrategy
             }
 
 
-            return $"Армії:\n" +
+            return $"Фактор захисту: {defenceFactor}" +
+                $"Армії:\n" +
                 $"{defendersDescription}\n" +
                 $"{attackersDescription}\n";
 

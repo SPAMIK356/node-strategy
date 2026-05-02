@@ -34,12 +34,13 @@ namespace NodeStrategy
             {
                 SetInteractiveElements(true);
             }
-            if (mapElement is Edge || forFaction.Gold < 150) //TODO: поміняти магічне число на щось нормальне, для мвп не критично
+            if (mapElement is Edge || forFaction.Gold <= 201 || mapElement.isContested) //TODO: поміняти магічне число на щось нормальне, для мвп не критично
             {
                 recruitArmy.Enabled = false;
             }
             else
             {
+                
                 recruitArmy.Enabled = true;
             }
 

@@ -50,7 +50,7 @@ namespace NodeStrategy
         {
             comp = targetNode.GetComponent<MilitaryComponent>();
 
-            return comp != null && comp.CanAcceptArmy(armyToAdd) && !targetNode.isContested && faction.Gold > template.Gold;
+            return comp != null && comp.CanAcceptArmy(armyToAdd) && !targetNode.isContested && faction.Gold >= template.Gold;
         }
 
         public override void OnFinish()
