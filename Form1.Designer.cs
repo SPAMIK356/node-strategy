@@ -39,7 +39,7 @@
             pictureBox1 = new PictureBox();
             menuStrip1 = new MenuStrip();
             додаToolStripMenuItem = new ToolStripMenuItem();
-            додатиІменаToolStripMenuItem = new ToolStripMenuItem();
+            addNames = new ToolStripMenuItem();
             tabControl1.SuspendLayout();
             mapTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)mapTable).BeginInit();
@@ -158,17 +158,17 @@
             // 
             // додаToolStripMenuItem
             // 
-            додаToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { додатиІменаToolStripMenuItem });
+            додаToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { addNames });
             додаToolStripMenuItem.Name = "додаToolStripMenuItem";
             додаToolStripMenuItem.Size = new Size(125, 24);
             додаToolStripMenuItem.Text = "Налаштування";
             // 
-            // додатиІменаToolStripMenuItem
+            // addNames
             // 
-            додатиІменаToolStripMenuItem.Name = "додатиІменаToolStripMenuItem";
-            додатиІменаToolStripMenuItem.Size = new Size(224, 26);
-            додатиІменаToolStripMenuItem.Text = "Додати імена";
-            додатиІменаToolStripMenuItem.Click += додатиІменаToolStripMenuItem_Click;
+            addNames.Name = "addNames";
+            addNames.Size = new Size(224, 26);
+            addNames.Text = "Додати імена";
+            addNames.Click += addNames_Click;
             // 
             // Form1
             // 
@@ -210,6 +210,6 @@
         private PictureBox pictureBox1;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem додаToolStripMenuItem;
-        private ToolStripMenuItem додатиІменаToolStripMenuItem;
+        private ToolStripMenuItem addNames;
     }
 }

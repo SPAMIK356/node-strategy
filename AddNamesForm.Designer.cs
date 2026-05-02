@@ -49,6 +49,7 @@
             addButton.TabIndex = 1;
             addButton.Text = "Додати імена";
             addButton.UseVisualStyleBackColor = true;
+            addButton.Click += addButton_Click;
             // 
             // typeComboBox
             // 

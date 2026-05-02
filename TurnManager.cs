@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace NodeStrategy
@@ -13,7 +14,7 @@ namespace NodeStrategy
         private int currentTurnIndex = 0;
         public int CurrentTurn { get; private set; } = 1;
         public Action TurnEnd;
-        
+        public Action<Faction> GameWon;
 
         public List<Command> plannedCommands = new List<Command>();
 
@@ -73,10 +74,29 @@ namespace NodeStrategy
                 mapElement.OnTurnEnd();
             }
 
+            CheckForWin();
+
             currentTurnIndex = (currentTurnIndex + 1) % turnOrder.Count;
             CurrentTurn++;
 
             TurnEnd?.Invoke();
+        }
+        private void CheckForWin()
+        {
+            var aliveFactions = mapElements.Values
+            .Select(x => x.controledBy)
+            .Distinct().ToList();
+
+            var lostFactions = turnOrder.Except(aliveFactions).ToList();
+
+            foreach(var lost in lostFactions)
+            {
+                turnOrder.Remove(lost);
+            }
+
+            if (turnOrder.Count < 2 || turnOrder.Count == 2 && turnOrder.Contains(0)){
+                GameWon?.Invoke(factions[turnOrder.Where(x => x != 0).FirstOrDefault()]);
+            }
         }
         public void AddCommand(Command command)
         {

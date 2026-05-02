@@ -10,14 +10,8 @@ namespace NodeStrategy
         {
             InitializeComponent();
 
-            /*manager.factions.Add(0, new Faction(IDReg.NextID));
-            manager.turnOrder.Add(0);
-            manager.factions[0].ModifyGold(1000);
-            InitializeComponent();
-            node = new Node("Арциз", IDReg.NextID, 0);
-            node.AddComponent(new MilitaryComponent(10, 1));
-            node.AddComponent(new EconomyComponent(-100));
-            manager.mapElements.Add(node.id, node);*/
+
+            manager.GameWon += OnGameFinished;
 
             manager.factions.Add(0, new Faction(IDReg.NextID));
 
@@ -78,7 +72,12 @@ namespace NodeStrategy
             mapTable.Columns["Name"]?.HeaderText = "Назва";
             mapTable.Columns["GoldGain"]?.HeaderText = "Дохід золота";
         }
+        private void OnGameFinished(Faction faction)
+        {
+            MessageBox.Show($"Перемогла фракція {faction.id}!", "Перемога!");
 
+            Application.Exit();
+        }
         private void ArmiesTabUpdate()
         {
             armiesTable.DataSource = null;
@@ -171,9 +170,11 @@ namespace NodeStrategy
             MapRenderer.DrawMap(e.Graphics, manager, pictureBox1.Width, pictureBox1.Height);
         }
 
-        private void додатиІменаToolStripMenuItem_Click(object sender, EventArgs e)
+        private void addNames_Click(object sender, EventArgs e)
         {
+            var dialogue = new AddNamesForm();
 
+            dialogue.ShowDialog();
         }
     }
 }

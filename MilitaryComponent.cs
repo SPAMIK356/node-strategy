@@ -49,8 +49,16 @@ namespace NodeStrategy
         }
         public void ResolveCombat()
         {
-            if(defenders.Count == 0 || attackers.Count == 0)
+            if(attackers.Count == 0)
             {
+                return;
+            }
+            else if(defenders.Count == 0) 
+            {
+                (parent as Node).SetControl(attackers[0].ControledBy);
+
+                defenders.AddRange(attackers);
+                attackers.Clear();
                 return;
             }
 
