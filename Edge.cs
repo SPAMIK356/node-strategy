@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NodeStrategy
 {
-    class Edge : MapElement
+    public class Edge : MapElement
     {
 
         public List<Army> armies = new List<Army>();
@@ -26,7 +26,7 @@ namespace NodeStrategy
             this.terrainDifficulty = terrainDifficulty;
             this.infrastructureLevel = infrastructureLevel;
         }
-        public bool isContested
+        public override bool isContested
         {
             get
             {
@@ -56,6 +56,21 @@ namespace NodeStrategy
         public override bool TryRemoveArmy(Army army)
         {
             return armies.Remove(army);
+        }
+
+        public override string GetDescription()
+        {
+            var description = $"ID: {id}\n";
+
+            var controled = isContested ? $"Поділене між фракцією {a.controledBy} та {b.controledBy}" : $"Контролюється фракцією {a.controledBy}";
+
+            description += $"Дорога\n" +
+                $"З'єднує міста {a.Name} та {b.Name}\n" +
+                $"{controled}\n" +
+                $"Складність ландшафту: {terrainDifficulty}\n" +
+                $"Рівень інфраструктури: {infrastructureLevel}";
+
+            return description;
         }
     }
 }

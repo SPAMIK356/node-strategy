@@ -3,14 +3,18 @@ using System.ComponentModel;
 
 namespace NodeStrategy
 {
-    abstract class Command
+    public abstract class Command
     {
-        public virtual string errorMessage { get; protected set; }
-        public virtual string startMessage { get; protected set;  }
-        public virtual string successMessage { get; protected set;  }
+        public Command(int executerId)
+        {
+            this.executerId = executerId;
+        }
+        public virtual string errorMessage { get; init; }
+        public virtual string startMessage { get; init;  }
+        public virtual string successMessage { get; init;  }
         public virtual bool finishedExectuing { get; protected set; } 
         public virtual int executerId { get; protected set; }
-
+        public virtual string description { get; protected set; }
         public virtual string Name { get; protected set; }
 
         public abstract void OnStart();

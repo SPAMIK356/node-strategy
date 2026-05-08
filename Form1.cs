@@ -1,83 +1,180 @@
-using System.Diagnostics;
 
 namespace NodeStrategy
 {
     public partial class Form1 : Form
     {
+        Node node;
         private TurnManager manager = new();
-        private Army army;
+        ArmyTemplate template;
         public Form1()
         {
-
             InitializeComponent();
-            Load += new EventHandler(OnFormLoad);
-        }
 
-        private void OnFormLoad(object sender, EventArgs e)
+
+            manager.GameWon += OnGameFinished;
+
+            manager.factions.Add(0, new Faction(IDReg.NextID));
+
+            manager.factions.Add(1, new Faction(IDReg.NextID));
+            manager.factions.Add(2, new Faction(IDReg.NextID));
+
+            manager.turnOrder.Add(1);
+            manager.turnOrder.Add(2);
+
+            template = new ArmyTemplate()
+            {
+                Name = "Лісові тварюки",
+                Exp = 1,
+                ExpCap = 4,
+                Units = 100,
+                UnitsCap = 100
+            };
+            cityInspector.OnRecruitButtonClicked += node =>
+            {
+                manager.AddCommand(new RecruitCommand(manager.CurrentFaction.id, node, template, manager.CurrentFaction));
+            };
+
+            manager.TurnEnd += FullUpdate;
+
+            armyInspector.LinkLabelClicked += element =>
+            {
+                try
+                {
+                    cityInspector.DisplayInfo(element, manager.CurrentFaction);
+                    tabControl1.SelectedIndex = 0;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Помилка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            };
+            armyInspector.GiveOrderClicked += command => { manager.AddCommand(command); };
+
+            MapGenerator.GenerateMap(manager, 20, pictureBox1.Width, pictureBox1.Height, new List<int> { 1, 2 });
+
+
+            FullUpdate();
+        }
+        private void HeaderTextUpdate()
         {
-            table.DataSource = manager.plannedCommands;
-
-            var a = new Node("City 1", 0,0);
-            a.AddComponent(new MilitaryComponent(10, 1));
-
-
-            var b = new Node("City 2", 1,1);
-            b.AddComponent(new MilitaryComponent(10, 1));
-
-            var road = new Edge("Road", 2, a, b, 0.1f, 1);
-            a.TryConnect(b, road);
-            manager.factions.Add(4, new Faction());
-            manager.mapElements.Add(a.id, a);
-            manager.mapElements.Add(b.id, b);
-            manager.mapElements.Add(road.id, road);
-            activeComands.DataSource = manager.activeCommands;
-            manager.turnOrder.Add(4);
-
-            army = new Army(3, 100, 2, 5, 100, 0, a, "Army");
-            a.AcceptArmy(army);
-
-            var enArmy = new Army(4, 100, 1, 5, 100, 1, b, "Enemy");
-            b.AcceptArmy(enArmy);
-
-            nodeSelection.Items.AddRange((army.currentPosition as Node).GetConnectedNodes().ToArray());
-            nodeSelection.ValueMember = "Name";
-            nodeSelection.Update();
-            DisplayArmyState(army);
+            int gpt = manager.GetGoldPerTurn(manager.CurrentFaction);
+            Text = $"Фракція {manager.CurrentFaction.id} | {manager.CurrentFaction.Gold} золота ({(gpt > 0 ? $"+{gpt}" : gpt)} за хід)";
         }
-        private void DisplayArmyState(Army army)
+
+        private void MapElementsTabUpdate()
         {
-            string state = $"Армія під назвою {army.name} знаходиться у {army.currentPosition.Name}.";
+            mapTable.DataSource = null;
 
-            armyState.Text = state;
-
-            armyState.Update();
+            mapTable.DataSource = manager.mapElements.Values.ToList();
+            mapTable.Columns["id"]?.Visible = false;
+            mapTable.Columns["isContested"]?.Visible = false;
+            mapTable.Columns["controledBy"]?.HeaderText = "Під контролем";
+            mapTable.Columns["Name"]?.HeaderText = "Назва";
+            mapTable.Columns["GoldGain"]?.HeaderText = "Дохід золота";
         }
-
-        private void giveOrder_Click(object sender, EventArgs e)
+        private void OnGameFinished(Faction faction)
         {
-            manager.AddCommand(new MoveCommand(army, (Node)nodeSelection.SelectedItem));
-            table.DataSource = null;
+            MessageBox.Show($"Перемогла фракція {faction.id}!", "Перемога!");
 
-            table.DataSource = manager.plannedCommands;
-            table.Update();
+            Application.Exit();
+        }
+        private void ArmiesTabUpdate()
+        {
+            armiesTable.DataSource = null;
+
+            armiesTable.DataSource = manager.GetAllArmies();
+            armiesTable.Columns["Id"]?.Visible = false;
+            armiesTable.Columns["Name"]?.HeaderText = "Назва";
+            armiesTable.Columns["Units"]?.HeaderText = "Кількість";
+            armiesTable.Columns["UnitCap"]?.HeaderText = "Макс. юнітів";
+            armiesTable.Columns["Exp"]?.HeaderText = "Досвід";
+            armiesTable.Columns["ExpCap"]?.HeaderText = "Макс. досвід";
+            armiesTable.Columns["ControledBy"]?.HeaderText = "Під контролем";
+            armiesTable.Columns["CurrentPosition"]?.Visible = false;
+            armiesTable.Columns["CurrentPositionName"]?.HeaderText = "Позиція";
+            armiesTable.Columns["IsDead"]?.Visible = false;
+        }
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (tabControl1.SelectedIndex)
+            {
+                case 0:
+                    MapElementsTabUpdate();
+                    cityInspector.Visible = mapTable.Rows.Count > 0 ? true : false;
+                    armyInspector.Visible = false;
+                    break;
+
+                case 1:
+                    ArmiesTabUpdate();
+                    cityInspector.Visible = false;
+
+                    armyInspector.Visible = armiesTable.Rows.Count > 0 ? true : false;
+
+                    break;
+            }
+        }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
 
-        private void nextTurn_Click(object sender, EventArgs e)
+        private void endTurn_Click(object sender, EventArgs e)
         {
             manager.EndTurn();
-            table.DataSource = null;
-            activeComands.DataSource = null;
-            activeComands.DataSource = manager.activeCommands;
-            DisplayArmyState(army);
-
-            nodeSelection.Items.Clear();
-            nodeSelection.SelectedItem = null;
-            if(army.currentPosition is Node node)
-            {
-                nodeSelection.Items.AddRange(node.GetConnectedNodes().ToArray());
-            }
-
             Update();
+        }
+
+        private void FullUpdate()
+        {
+            MapElementsTabUpdate();
+            ArmiesTabUpdate();
+            HeaderTextUpdate();
+            pictureBox1.Invalidate();
+
+        }
+
+        private void mapTable_SelectionChanged(object sender, EventArgs e)
+        {
+            if (mapTable.SelectedRows.Count > 0)
+            {
+                var selectedRow = mapTable.SelectedRows[0];
+
+                var element = selectedRow.DataBoundItem as MapElement;
+
+                cityInspector.DisplayInfo(element, manager.CurrentFaction);
+            }
+        }
+
+        private void armiesTable_SelectionChanged(object sender, EventArgs e)
+        {
+            if (armiesTable.SelectedRows.Count > 0)
+            {
+                var selectedRow = armiesTable.SelectedRows[0];
+
+                var element = selectedRow.DataBoundItem as Army;
+
+                armyInspector.DisplayInfo(element, manager.activeCommands
+                    .OfType<ITargetedCommand>()
+                    .Where(x => x.subjectId == element.Id)
+                    .FirstOrDefault() as Command
+                    , manager.CurrentFaction.id);
+            }
+            else
+            {
+                armyInspector.Visible = false;
+            }
+        }
+
+        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        {
+            MapRenderer.DrawMap(e.Graphics, manager, pictureBox1.Width, pictureBox1.Height);
+        }
+
+        private void addNames_Click(object sender, EventArgs e)
+        {
+            var dialogue = new AddNamesForm();
+
+            dialogue.ShowDialog();
         }
     }
 }

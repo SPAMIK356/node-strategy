@@ -4,10 +4,10 @@ using System.Text;
 
 namespace NodeStrategy
 {
-    abstract class Component
+    public abstract class Component
     {
         public MapElement parent { get; set; }
-        
+        public abstract string GetDescription();
         public abstract void OnTurnEnd();
     }
 }

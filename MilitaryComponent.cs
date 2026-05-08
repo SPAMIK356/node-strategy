@@ -22,7 +22,7 @@ namespace NodeStrategy
             { 
                 get 
                 {
-                    return Convert.ToInt32((float)unitAmount * exp * CombatRules.combatLethality*(1+CombatRules.expWeight));
+                    return Convert.ToInt32((float)unitAmount * exp * CombatRules.CombatLethality*(1+CombatRules.ExpWeight));
                 } 
             }
             public ArmyStats(int unitAmount, float exp, ArmyState state)
@@ -34,7 +34,8 @@ namespace NodeStrategy
         }
         List<Army> defenders = new();
         List<Army> attackers = new();
-
+        public int defendersCount { get => defenders.Count; }
+        public int attackersCount { get => attackers.Count;  }
         public bool DefendersFull { get => defenders.Count >= armyCap; }
         public bool AttackersFull { get => attackers.Count >= armyCap; }
 
@@ -48,8 +49,16 @@ namespace NodeStrategy
         }
         public void ResolveCombat()
         {
-            if(defenders.Count == 0 || attackers.Count == 0)
+            if(attackers.Count == 0)
             {
+                return;
+            }
+            else if(defenders.Count == 0) 
+            {
+                (parent as Node).SetControl(attackers[0].ControledBy);
+
+                defenders.AddRange(attackers);
+                attackers.Clear();
                 return;
             }
 
@@ -65,10 +74,17 @@ namespace NodeStrategy
             ClearDefeatedArmies();
             if(defenders.Count == 0 && attackers.Count > 0 && parent is Node node)
             {
-                node.SetControl(attackers[0].controledBy);
+                node.SetControl(attackers[0].ControledBy);
                 defenders.AddRange(attackers);
                 attackers.Clear();
             }
+            AddExp(defenders, attackersStats.unitAmount - GetTotalUnits(attackers));
+            AddExp(attackers, defendersStats.unitAmount - GetTotalUnits(defenders));
+
+        }
+        protected void AddExp(List<Army> armyGroup, int defeatedUnits)
+        {
+            armyGroup.ForEach(army => army.ModifyExp(defeatedUnits * CombatRules.ExpPerDefeatedUnit));
         }
         protected void DamageArmyGroup(List<Army> armies, ArmyStats defStats, int damage)
         {
@@ -80,20 +96,20 @@ namespace NodeStrategy
         }
         protected int GetTotalUnits(List<Army> armies)
         {
-            return armies.Sum(x => x.units);
+            return armies.Sum(x => x.Units);
         }
 
         protected float GetAverageXP(List<Army> armies)
         {
-            return armies.Sum(x => x.units*x.exp)/GetTotalUnits(armies);
+            return armies.Sum(x => x.Units*x.Exp)/GetTotalUnits(armies);
         }
         protected float GetAverageXP(List<Army> armies, int totalUnits)
         {
-            return armies.Sum(x => x.units * x.exp) / totalUnits;
+            return armies.Sum(x => x.Units * x.Exp) / totalUnits;
         }
         public bool TryAddArmy(Army army)
         {
-            if(army.controledBy == parent.controledBy)
+            if(army.ControledBy == parent.controledBy)
             {
                 if(!DefendersFull)
                 {
@@ -108,7 +124,7 @@ namespace NodeStrategy
             }
             else if (!AttackersFull)
             {
-                if(attackers.Count == 0 || attackers[0].controledBy == army.controledBy)
+                if(attackers.Count == 0 || attackers[0].ControledBy == army.ControledBy)
                 {
                     attackers.Add(army);
                     return true;
@@ -119,7 +135,7 @@ namespace NodeStrategy
         }
         public bool CanAcceptArmy(Army army)
         {
-            if(army.controledBy == parent.controledBy)
+            if(army.ControledBy == parent.controledBy)
             {
                 if(defenders.Count >= armyCap)
                     return false;
@@ -142,9 +158,60 @@ namespace NodeStrategy
         }
         public void ClearDefeatedArmies()
         {
-            defenders.RemoveAll(x => x.isDead);
-            attackers.RemoveAll(x => x.isDead);
+            defenders.RemoveAll(x => x.IsDead);
+            attackers.RemoveAll(x => x.IsDead);
+        }
+        private string GetArmyInfo(Army army)
+        {
+            return $"{army.Name}, {army.Units} юнітів, {army.Exp} досвіду";
         }
         
+        public override string GetDescription()
+        {
+            string defendersDescription = "";
+            string attackersDescription = "";
+
+
+            if(defenders.Count == 0)
+            {
+                defendersDescription = "Захисників нема!";
+            }
+            else
+            {
+                defendersDescription = $"{defenders.Count}/{armyCap} захисників\n";
+                foreach(Army army in defenders)
+                {
+                    defendersDescription += GetArmyInfo(army) + '\n';
+                }
+            }
+
+            if(attackers.Count == 0)
+            {
+                attackersDescription = "Атакуючх нема!";
+            }
+            else
+            {
+                attackersDescription = $"{attackers.Count}/{armyCap} атакуючих\n";
+
+                foreach (Army army in attackers)
+                {
+                    attackersDescription += GetArmyInfo(army) + '\n';
+                }
+            }
+
+
+            return $"Фактор захисту: {defenceFactor}" +
+                $"Армії:\n" +
+                $"{defendersDescription}\n" +
+                $"{attackersDescription}\n";
+
+        }
+
+        public List<Army> GetArmies()
+        {
+ 
+
+            return defenders.Concat(attackers).ToList();
+        }
     }
 }

@@ -4,8 +4,10 @@ using System.Text;
 
 namespace NodeStrategy
 {
-    abstract class MapElement
+    public abstract class MapElement
     {
+        public virtual int GoldGain { get => 0; }
+        public abstract bool isContested { get; }
         public virtual bool AddComponent(Component component)
         {
             component.parent = this;
@@ -16,9 +18,13 @@ namespace NodeStrategy
         {
             return components.OfType<T>().FirstOrDefault();
         }
+        public virtual T[] GetComponents<T>()
+        {
+            return components.OfType<T>().ToArray();
+        }
         public string Name { get; protected set; }
         protected List<Component> components;
-        public int id;
+        public int id { get; protected set; }
         public virtual int controledBy { get; protected set; }
         public MapElement(string name, int id)
         {
@@ -33,5 +39,10 @@ namespace NodeStrategy
 
         public abstract bool TryRemoveArmy(Army army);
 
+        public virtual string GetDescription()
+        {
+            return $"ID: {id}\n" +
+                $"Контролюється фракцією {controledBy}\n";
+        }
     }
 }

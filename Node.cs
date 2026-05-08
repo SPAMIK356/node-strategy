@@ -1,12 +1,35 @@
 ﻿namespace NodeStrategy
 {
-    class Node : MapElement
+    public class Node : MapElement
     {
+        public int X { get; init; }
+        public int Y { get; init; }
+        public override int GoldGain { get {
+                var economyComponent = components.OfType<EconomyComponent>().FirstOrDefault();
 
+                if (economyComponent != null)
+                {
+                    return economyComponent.GoldPerTurn;
+                }
+                return base.GoldGain;
+            } 
+        }
         public override int controledBy { get => base.controledBy; protected set => base.controledBy = value; }
         List<Edge> edges = new List<Edge>();
 
-
+        public override bool isContested { get 
+            {
+                var comp = GetComponent<MilitaryComponent>();
+                if(comp != null)
+                {
+                    return comp.attackersCount > 0;
+                }
+                else
+                {
+                    return false;
+                }
+            } 
+        }
         
         public Node(string name, int id, int controledBy) : base(name,id)
         {
@@ -72,6 +95,19 @@
             }
 
             return military.TryRemoveArmy(army);
+        }
+        public override string GetDescription()
+        {
+            var baseDecription = base.GetDescription();
+
+            var descrtiption = $"Місто\n" +
+                $"{baseDecription}";
+
+            foreach(var comp in components)
+            {
+                descrtiption += '\n'+comp.GetDescription()+'\n';
+            }
+            return descrtiption;
         }
     }
 }

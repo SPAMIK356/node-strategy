@@ -28,98 +28,188 @@
         /// </summary>
         private void InitializeComponent()
         {
-            nextTurn = new Button();
-            armyState = new Label();
-            table = new DataGridView();
-            nodeSelection = new ComboBox();
-            giveOrder = new Button();
-            activeComands = new DataGridView();
-            ((System.ComponentModel.ISupportInitialize)table).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)activeComands).BeginInit();
+            endTurn = new Button();
+            cityInspector = new CityInspector();
+            armyInspector = new ArmyInspector();
+            tabControl1 = new TabControl();
+            mapTab = new TabPage();
+            mapTable = new DataGridView();
+            armiesTab = new TabPage();
+            armiesTable = new DataGridView();
+            pictureBox1 = new PictureBox();
+            menuStrip1 = new MenuStrip();
+            додаToolStripMenuItem = new ToolStripMenuItem();
+            addNames = new ToolStripMenuItem();
+            tabControl1.SuspendLayout();
+            mapTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)mapTable).BeginInit();
+            armiesTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)armiesTable).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
-            // nextTurn
+            // endTurn
             // 
-            nextTurn.Location = new Point(71, 337);
-            nextTurn.Name = "nextTurn";
-            nextTurn.Size = new Size(136, 46);
-            nextTurn.TabIndex = 0;
-            nextTurn.Text = "Наступний хід";
-            nextTurn.UseVisualStyleBackColor = true;
-            nextTurn.Click += nextTurn_Click;
+            endTurn.Cursor = Cursors.Hand;
+            endTurn.Font = new Font("Segoe UI", 15F, FontStyle.Bold);
+            endTurn.Location = new Point(25, 852);
+            endTurn.Name = "endTurn";
+            endTurn.Size = new Size(474, 151);
+            endTurn.TabIndex = 1;
+            endTurn.Text = "Завершити Хід";
+            endTurn.UseVisualStyleBackColor = true;
+            endTurn.Click += endTurn_Click;
             // 
-            // armyState
+            // cityInspector
             // 
-            armyState.AutoSize = true;
-            armyState.Location = new Point(36, 38);
-            armyState.Name = "armyState";
-            armyState.Size = new Size(50, 20);
-            armyState.TabIndex = 1;
-            armyState.Text = "label1";
+            cityInspector.Location = new Point(1507, 1);
+            cityInspector.Name = "cityInspector";
+            cityInspector.Size = new Size(396, 1080);
+            cityInspector.TabIndex = 2;
+            cityInspector.Visible = false;
             // 
-            // table
+            // armyInspector
             // 
-            table.AllowUserToAddRows = false;
-            table.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            table.Location = new Point(287, 215);
-            table.Name = "table";
-            table.RowHeadersWidth = 51;
-            table.Size = new Size(468, 223);
-            table.TabIndex = 2;
+            armyInspector.Location = new Point(1507, 1);
+            armyInspector.Name = "armyInspector";
+            armyInspector.Size = new Size(396, 1080);
+            armyInspector.TabIndex = 3;
+            armyInspector.Visible = false;
             // 
-            // nodeSelection
+            // tabControl1
             // 
-            nodeSelection.FormattingEnabled = true;
-            nodeSelection.Location = new Point(38, 131);
-            nodeSelection.Name = "nodeSelection";
-            nodeSelection.Size = new Size(61, 28);
-            nodeSelection.TabIndex = 3;
+            tabControl1.Controls.Add(mapTab);
+            tabControl1.Controls.Add(armiesTab);
+            tabControl1.Location = new Point(525, 1);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new Size(976, 1020);
+            tabControl1.TabIndex = 4;
+            tabControl1.SelectedIndexChanged += tabControl1_SelectedIndexChanged;
             // 
-            // giveOrder
+            // mapTab
             // 
-            giveOrder.Location = new Point(71, 259);
-            giveOrder.Name = "giveOrder";
-            giveOrder.Size = new Size(114, 34);
-            giveOrder.TabIndex = 4;
-            giveOrder.Text = "Віддати наказ";
-            giveOrder.UseVisualStyleBackColor = true;
-            giveOrder.Click += giveOrder_Click;
+            mapTab.Controls.Add(mapTable);
+            mapTab.Location = new Point(4, 29);
+            mapTab.Name = "mapTab";
+            mapTab.Padding = new Padding(3);
+            mapTab.Size = new Size(968, 987);
+            mapTab.TabIndex = 0;
+            mapTab.Text = "Мапа";
+            mapTab.UseVisualStyleBackColor = true;
             // 
-            // activeComands
+            // mapTable
             // 
-            activeComands.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            activeComands.Location = new Point(297, 89);
-            activeComands.Name = "activeComands";
-            activeComands.RowHeadersWidth = 51;
-            activeComands.Size = new Size(453, 119);
-            activeComands.TabIndex = 5;
+            mapTable.AllowUserToAddRows = false;
+            mapTable.AllowUserToDeleteRows = false;
+            mapTable.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            mapTable.Dock = DockStyle.Fill;
+            mapTable.Location = new Point(3, 3);
+            mapTable.Name = "mapTable";
+            mapTable.ReadOnly = true;
+            mapTable.RowHeadersWidth = 51;
+            mapTable.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            mapTable.Size = new Size(962, 981);
+            mapTable.TabIndex = 0;
+            mapTable.SelectionChanged += mapTable_SelectionChanged;
+            // 
+            // armiesTab
+            // 
+            armiesTab.Controls.Add(armiesTable);
+            armiesTab.Location = new Point(4, 29);
+            armiesTab.Name = "armiesTab";
+            armiesTab.Padding = new Padding(3);
+            armiesTab.Size = new Size(968, 987);
+            armiesTab.TabIndex = 1;
+            armiesTab.Text = "Армії";
+            armiesTab.UseVisualStyleBackColor = true;
+            // 
+            // armiesTable
+            // 
+            armiesTable.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            armiesTable.Dock = DockStyle.Fill;
+            armiesTable.Location = new Point(3, 3);
+            armiesTable.Name = "armiesTable";
+            armiesTable.RowHeadersWidth = 51;
+            armiesTable.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            armiesTable.Size = new Size(962, 981);
+            armiesTable.TabIndex = 0;
+            armiesTable.SelectionChanged += armiesTable_SelectionChanged;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Location = new Point(-7, 30);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(533, 805);
+            pictureBox1.TabIndex = 5;
+            pictureBox1.TabStop = false;
+            pictureBox1.Paint += pictureBox1_Paint;
+            // 
+            // menuStrip1
+            // 
+            menuStrip1.ImageScalingSize = new Size(20, 20);
+            menuStrip1.Items.AddRange(new ToolStripItem[] { додаToolStripMenuItem });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(1902, 28);
+            menuStrip1.TabIndex = 6;
+            menuStrip1.Text = "menuStrip1";
+            // 
+            // додаToolStripMenuItem
+            // 
+            додаToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { addNames });
+            додаToolStripMenuItem.Name = "додаToolStripMenuItem";
+            додаToolStripMenuItem.Size = new Size(125, 24);
+            додаToolStripMenuItem.Text = "Налаштування";
+            // 
+            // addNames
+            // 
+            addNames.Name = "addNames";
+            addNames.Size = new Size(224, 26);
+            addNames.Text = "Додати імена";
+            addNames.Click += addNames_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(activeComands);
-            Controls.Add(giveOrder);
-            Controls.Add(nodeSelection);
-            Controls.Add(table);
-            Controls.Add(armyState);
-            Controls.Add(nextTurn);
+            ClientSize = new Size(1902, 1033);
+            Controls.Add(pictureBox1);
+            Controls.Add(tabControl1);
+            Controls.Add(armyInspector);
+            Controls.Add(cityInspector);
+            Controls.Add(endTurn);
+            Controls.Add(menuStrip1);
+            MainMenuStrip = menuStrip1;
             Name = "Form1";
             Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)table).EndInit();
-            ((System.ComponentModel.ISupportInitialize)activeComands).EndInit();
+            WindowState = FormWindowState.Maximized;
+            tabControl1.ResumeLayout(false);
+            mapTab.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)mapTable).EndInit();
+            armiesTab.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)armiesTable).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private Button nextTurn;
-        private Label armyState;
-        private DataGridView table;
-        private ComboBox nodeSelection;
-        private Button giveOrder;
-        private DataGridView activeComands;
+        private CityInspector cityInspector1;
+        private Button endTurn;
+        private CityInspector cityInspector;
+        private ArmyInspector armyInspector;
+        private TabControl tabControl1;
+        private TabPage mapTab;
+        private TabPage armiesTab;
+        private DataGridView mapTable;
+        private DataGridView armiesTable;
+        private PictureBox pictureBox1;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem додаToolStripMenuItem;
+        private ToolStripMenuItem addNames;
     }
 }
