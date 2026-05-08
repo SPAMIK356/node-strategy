@@ -11,32 +11,24 @@ namespace NodeStrategy
         {
             Random rnd = new Random();
 
-            // 1. Завантажуємо імена з файлів
-            // Переконайся, що файли CityNames.txt та ArmyNames.txt лежать у папці з .exe
             List<string> cityNames = File.Exists("CityNames.txt") ? File.ReadAllLines("CityNames.txt").ToList() : new List<string> { "Арциз", "Київ", "Одеса", "Львів", "Дніпро", "Харків" };
             List<string> armyNames = File.Exists("ArmyNames.txt") ? File.ReadAllLines("ArmyNames.txt").ToList() : new List<string> { "Лісові тварюки", "Міська варта", "Найманці", "Ополчення" };
 
             List<Node> nodes = new List<Node>();
 
-            // 2. Створюємо вершини з балансом Економіка vs Захист
             for (int i = 0; i < numberOfNodes; i++)
             {
                 string cityName = cityNames.Count > 0 ? cityNames[rnd.Next(cityNames.Count)] : $"Місто {i}";
                 cityNames.Remove(cityName);
 
-                // Генерація унікальних координат
                 int x = rnd.Next(50, mapWidth - 50);
                 int y = rnd.Next(50, mapHeight - 50);
 
-                // Балансування: randomFactor від 0 до 100
-                // 100 = максимальний дохід, мінімальний захист
-                // 0 = мінімальний дохід, максимальний захист
+
                 int randomFactor = rnd.Next(0, 101);
 
-                // Дохід: від 30 до 80 (щоб армія за 201 голду окупалася за 3-7 ходів)
                 int income = 30 + (randomFactor / 2);
 
-                // Місткість/Захист: чим більший randomFactor, тим менший захист
                 int militaryCap = rnd.Next(2,5);
 
                 Node node = new Node(cityName, IDReg.NextID, 0) { X = x, Y = y };
@@ -47,7 +39,6 @@ namespace NodeStrategy
                 manager.mapElements.Add(node.id, node);
             }
 
-            // 3. Алгоритм Пріма для з'єднання вершин (мінімальне кістякове дерево)
             HashSet<Node> connected = new HashSet<Node> { nodes[0] };
             HashSet<Node> unconnected = new HashSet<Node>(nodes.Skip(1));
 
@@ -79,7 +70,7 @@ namespace NodeStrategy
                 unconnected.Remove(bestUnconnected);
             }
 
-            // Додаємо кілька випадкових доріг (наприклад, +20% від кількості міст), щоб утворилися цикли для тактичних маневрів
+   
             int extraEdges = numberOfNodes / 5;
             for (int i = 0; i < extraEdges; i++)
             {
@@ -93,11 +84,9 @@ namespace NodeStrategy
                 }
             }
 
-            // 4. Розподіл стартових позицій та армій
-            // Перемішуємо вершини для випадкового старту
+
             var shuffledNodes = nodes.OrderBy(n => rnd.Next()).ToList();
 
-            // Розсаджуємо гравців
             foreach (int playerId in playerFactions)
             {
                 Node startNode = shuffledNodes[0];
@@ -108,17 +97,15 @@ namespace NodeStrategy
                 string armyName = armyNames.Count > 0 ? armyNames[rnd.Next(armyNames.Count)] : $"Армія гравця {playerId}";
                 armyNames.Remove(armyName);
 
-                // Даємо повноцінну стартову армію (100 юнітів)
                 Army playerArmy = new Army(IDReg.NextID, 100, 1, 4, 100, playerId, startNode, armyName);
                 startNode.AcceptArmy(playerArmy);
             }
 
-            // 5. Заселяємо решту мапи нейтралами (Фракція 0)
+
             foreach (Node neutralNode in shuffledNodes)
             {
                 string armyName = armyNames.Count > 0 ? armyNames[rnd.Next(armyNames.Count)] : "Ополчення";
 
-                // Нейтральні армії можна зробити трохи слабшими (наприклад, 50 юнітів), щоб гравець міг їх захопити
                 Army neutralArmy = new Army(IDReg.NextID, 50, 1, 4, 100, 0, neutralNode, armyName);
                 neutralNode.AcceptArmy(neutralArmy);
             }
